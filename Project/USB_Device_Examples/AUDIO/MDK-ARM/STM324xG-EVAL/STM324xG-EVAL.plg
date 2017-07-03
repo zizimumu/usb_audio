@@ -1,0 +1,13 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\emy\Desktop\STM32_USB-Host-Device_Lib_V2.1.0\Project\USB_Device_Examples\AUDIO\MDK-ARM\usbd_audio.uvproj
+Project File Date:  06/28/2017
+
+<h2>Output:</h2>
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.

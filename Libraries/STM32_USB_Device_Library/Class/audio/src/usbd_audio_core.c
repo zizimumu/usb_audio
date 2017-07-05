@@ -137,6 +137,9 @@ static uint8_t  usbd_audio_OUT_Incplt (void  *pdev);
 static void AUDIO_Req_GetCurrent(void *pdev, USB_SETUP_REQ *req);
 static void AUDIO_Req_SetCurrent(void *pdev, USB_SETUP_REQ *req);
 static uint8_t  *USBD_audio_GetCfgDesc (uint8_t speed, uint16_t *length);
+
+void cacu_feed_up(void );
+
 /**
   * @}
   */ 
@@ -145,7 +148,10 @@ static uint8_t  *USBD_audio_GetCfgDesc (uint8_t speed, uint16_t *length);
   * @{
   */ 
 /* Main Buffer for Audio Data Out transfers and its relative pointers */
-uint8_t  IsocOutBuff [TOTAL_OUT_BUF_SIZE * 2];
+#define FEED_RATE 3
+#define MAX_PACKET_NUM ((1<<FEED_RATE) * 60)
+
+uint8_t  IsocOutBuff [AUDIO_OUT_PACKET*MAX_PACKET_NUM];
 uint8_t* IsocOutWrPtr = IsocOutBuff;
 uint8_t* IsocOutRdPtr = IsocOutBuff;
 
@@ -162,6 +168,8 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE];
 
 
 static char feed[16];
+static DMA_InitTypeDef DMA_InitStructure; 
+
 
 uint8_t  usbd_audio_IN_Incplt(void *pdev)
 {
@@ -195,6 +203,9 @@ uint8_t  usbd_audio_IN_Incplt(void *pdev)
 	}  
 
 #endif
+	  if(PlayFlag)
+		  cacu_feed_up();
+
 	  return USBD_OK;
 
 }
@@ -352,7 +363,9 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   USB_ENDPOINT_DESCRIPTOR_TYPE,         /* bDescriptorType */
   AUDIO_OUT_EP,                         /* bEndpointAddress 1 out endpoint*/
   USB_ENDPOINT_TYPE_ISOCHRONOUS  | 0x04,        /* bmAttributes */
-  AUDIO_PACKET_SZE(USBD_AUDIO_FREQ),    /* wMaxPacketSize in Bytes (Freq(Samples)*2(Stereo)*2(HalfWord)) */
+  // AUDIO_PACKET_SZE(USBD_AUDIO_FREQ),    /* wMaxPacketSize in Bytes (Freq(Samples)*2(Stereo)*2(HalfWord)) */
+ (USB_OTG_MAX_RX_SIZE & 0xff),((USB_OTG_MAX_RX_SIZE>>8)&0xff),
+  
   0x01,                                 /* bInterval */
   0x0,                                 /* bRefresh */
   AUDIO_FEED_UP_EP,                                 /* bSynchAddress */
@@ -376,7 +389,7 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   0x11,                               /* bmAttributes */
   3,0,                                /* wMaxPacketSize in Bytes 3 */
   1,                                  /* bInterval 1ms*/
-  4,            /* bRefresh 1 ~ 9,power of 2*/
+  FEED_RATE,            /* bRefresh 1 ~ 9,power of 2*/
   0x00,                               /* bSynchAddress */
   /* 09 byte*/
 } ;
@@ -389,7 +402,7 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   * @{
   */ 
 
-#if 0
+#if 1
 void I2S_GPIO_Init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -421,7 +434,7 @@ void I2S_GPIO_Init(void)
 void I2S_user_Init(u32 sample ,u32 frame_bits)
 {
   	I2S_InitTypeDef I2S_InitStructure;
-	u16 uint16_t= 0;
+	u16 data_fmt= 0;
 
 	I2S_GPIO_Init();
 
@@ -429,14 +442,14 @@ void I2S_user_Init(u32 sample ,u32 frame_bits)
 
 	switch(frame_bits){
 	    case 32 :
-	        uint16_t = I2S_DataFormat_32b;
+	        data_fmt = I2S_DataFormat_32b;
 	        break;
 	    case 16 :
-	        uint16_t = I2S_DataFormat_16b;
+	        data_fmt = I2S_DataFormat_16b;
 	        break;
 
 	     default :
-	        printf("I2S_user_Init: err frame bit frame_bits\r\n",frame_bits);
+	        printf("I2S_user_Init: err frame bit frame_bits %d\r\n",frame_bits);
 	        break;
 	};
 	
@@ -445,7 +458,7 @@ void I2S_user_Init(u32 sample ,u32 frame_bits)
   	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
   	SPI_I2S_DeInit(SPI2);
   	I2S_InitStructure.I2S_Standard = I2S_Standard_MSB;
-  	I2S_InitStructure.I2S_DataFormat = uint16_t;
+  	I2S_InitStructure.I2S_DataFormat = data_fmt;
   	I2S_InitStructure.I2S_CPOL = I2S_CPOL_Low;
   	I2S_InitStructure.I2S_Mode = I2S_Mode_MasterTx;
   	I2S_InitStructure.I2S_MCLKOutput = I2S_MCLKOutput_Enable; 
@@ -457,12 +470,16 @@ void I2S_user_Init(u32 sample ,u32 frame_bits)
 void Audio_DMA_Init(u32 frame_bit)  
 { 
   	NVIC_InitTypeDef NVIC_InitStructure;
-	u32 data_size;
+	u32 m_size,p_size;
 
-	if(frame_bit == 16)
-		data_size = DMA_MemoryDataSize_HalfWord;
-	else if(frame_bit == 32)
-		data_size = DMA_MemoryDataSize_Word;
+	if(frame_bit == 16){
+		m_size = DMA_MemoryDataSize_HalfWord;
+		p_size = DMA_PeripheralDataSize_HalfWord;
+	}
+	else if(frame_bit == 32){
+		m_size = DMA_MemoryDataSize_Word;
+		p_size = DMA_PeripheralDataSize_Word;
+		}
 	else{
 		printf("dma init err\r\n");
 		return ;
@@ -477,8 +494,8 @@ void Audio_DMA_Init(u32 frame_bit)
   	DMA_InitStructure.DMA_BufferSize = (uint32_t)0xFFFE;
   	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
   	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-  	DMA_InitStructure.DMA_PeripheralDataSize = data_size;
-  	DMA_InitStructure.DMA_MemoryDataSize = data_size; 
+  	DMA_InitStructure.DMA_PeripheralDataSize = p_size;
+  	DMA_InitStructure.DMA_MemoryDataSize = m_size; 
   	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular; 
   	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
   	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;         
@@ -497,15 +514,17 @@ void Audio_DMA_Init(u32 frame_bit)
   	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Tx, ENABLE);
 }
 
-void AUDIO_Init(u32 audio_sample,u32 frame_bit)
+static void AUDIO_Init(u32 audio_sample,u32 frame_bit)
 {
 	I2S_user_Init(audio_sample,frame_bit);
 	Audio_DMA_Init(frame_bit);	
 }
-void Audio_MAL_Play(u32 Addr, u32 Size)
-{         
+static void Audio_Play(u32 Addr, u32 Size)
+{   
+#define I2S_ENABLE_MASK                 0x0400
+
   	DMA_InitStructure.DMA_Memory0BaseAddr=(uint32_t)Addr;
-  	DMA_InitStructure.DMA_BufferSize=(uint32_t)Size/(WAVE_Format.BitsPerSample/8);
+  	DMA_InitStructure.DMA_BufferSize=(uint32_t)Size/(16/8);
   	DMA_Init(DMA1_Stream4,&DMA_InitStructure);
   	DMA_Cmd(DMA1_Stream4,ENABLE); 
   	if ((SPI2->I2SCFGR & I2S_ENABLE_MASK)==0)I2S_Cmd(SPI2,ENABLE);
@@ -525,7 +544,7 @@ void Audio_MAL_Play(u32 Addr, u32 Size)
 static uint8_t  usbd_audio_Init (void  *pdev, 
                                  uint8_t cfgidx)
 {  
-u32 data = 0;
+//u32 data = 0;
   /* Open EP OUT */
   DCD_EP_Open(pdev,
               AUDIO_OUT_EP,
@@ -560,6 +579,8 @@ DCD_EP_Tx (pdev,
                    AUDIO_OUT_EP,
                    (uint8_t*)IsocOutBuff,                        
                    AUDIO_OUT_PACKET);  
+
+  AUDIO_Init(USBD_AUDIO_FREQ,16);
   
   return USBD_OK;
 }
@@ -731,7 +752,7 @@ static uint8_t  usbd_audio_EP0_RxReady (void  *pdev)
   */
 static uint8_t  usbd_audio_DataIn (void *pdev, uint8_t epnum)
 {
-	u32 data;
+//	u32 data;
 
 
   if (epnum == (AUDIO_FEED_UP_EP & 0x7F))
@@ -747,6 +768,7 @@ static uint8_t  usbd_audio_DataIn (void *pdev, uint8_t epnum)
                  feed,
                  3);      
     }
+
   }
 
 
@@ -760,18 +782,32 @@ static uint8_t  usbd_audio_DataIn (void *pdev, uint8_t epnum)
   * @param  epnum: endpoint number
   * @retval status
   */
+  u32 w_packet = 0;
+u32 feed_freq;
+
+#define FABS(a,b) ((a)>(b)?((a)-(b)):(b)-(a))
+#define FEED_FREQ_2_BUFF(buf,freq) ( *(u32 *)buf = ( ( ((u32) freq /1000) << 14) | ((freq %1000) << 4) )  )
+
+#define FEED_MIN_VALUE (USBD_AUDIO_FREQ - USBD_AUDIO_FREQ/8)
+#define FEED_MAX_VALUE (USBD_AUDIO_FREQ + USBD_AUDIO_FREQ/4)
+
+#define FEED_STEP ((FEED_MAX_VALUE - FEED_MIN_VALUE)/30)
+
 static uint8_t  usbd_audio_DataOut (void *pdev, uint8_t epnum)
 {     
+
+	
+	
   if (epnum == AUDIO_OUT_EP)
   {    
     /* Increment the Buffer pointer or roll it back when all buffers are full */
-    if (IsocOutWrPtr >= (IsocOutBuff + (AUDIO_OUT_PACKET * OUT_PACKET_NUM)))
+    if (w_packet >=  MAX_PACKET_NUM)
     {/* All buffers are full: roll back */
-      IsocOutWrPtr = IsocOutBuff;
+      w_packet = 0;
     }
     else
     {/* Increment the buffer pointer */
-      IsocOutWrPtr += AUDIO_OUT_PACKET;
+      w_packet++;
     }
     
     /* Toggle the frame index */  
@@ -781,14 +817,17 @@ static uint8_t  usbd_audio_DataOut (void *pdev, uint8_t epnum)
     /* Prepare Out endpoint to receive next audio packet */
     DCD_EP_PrepareRx(pdev,
                      AUDIO_OUT_EP,
-                     (uint8_t*)(IsocOutWrPtr),
+                     (uint8_t*)(IsocOutBuff + w_packet*AUDIO_OUT_PACKET ),
                      AUDIO_OUT_PACKET);
       
     /* Trigger the start of streaming only when half buffer is full */
-    if ((PlayFlag == 0) && (IsocOutWrPtr >= (IsocOutBuff + ((AUDIO_OUT_PACKET * OUT_PACKET_NUM) / 2))))
+    if ((PlayFlag == 0) && (w_packet >=  MAX_PACKET_NUM / 2))
     {
       /* Enable start of Streaming */
-      PlayFlag = 1;
+      	PlayFlag = 1;
+	  Audio_Play((u32)IsocOutBuff,sizeof(IsocOutBuff));
+	  feed_freq = USBD_AUDIO_FREQ;
+	  FEED_FREQ_2_BUFF(feed,feed_freq);
     }
   }
   
@@ -802,7 +841,40 @@ static uint8_t  usbd_audio_DataOut (void *pdev, uint8_t epnum)
   * @param  epnum: endpoint number
   * @retval status
   */
-  
+
+
+// the feed value :   freq - freq/8 <= value <= freq + freq/4
+//note,the endpoint MaxPakcet size is related to max feed freq
+ void cacu_feed_up(void )
+{
+	u32 r_packet,free_packet;
+	r_packet = ( sizeof(IsocOutBuff) - DMA_GetCurrDataCounter(DMA1_Stream4) \
+			+  AUDIO_OUT_PACKET -1)/AUDIO_OUT_PACKET; 
+
+	free_packet = FABS(r_packet,w_packet);
+
+	if(free_packet <= 1){
+		printf("data over!!! \r\n");
+
+	}
+	if(free_packet > MAX_PACKET_NUM/2){
+		feed_freq -= FEED_STEP;
+		if(feed_freq <= FEED_MIN_VALUE)
+			feed_freq = FEED_MIN_VALUE;
+		
+	}
+	else if(free_packet < MAX_PACKET_NUM/2){
+		feed_freq += FEED_STEP;
+		if(feed_freq >= FEED_MAX_VALUE)
+			feed_freq = FEED_MAX_VALUE;
+	}
+	else{
+		feed_freq = USBD_AUDIO_FREQ;
+	}
+	FEED_FREQ_2_BUFF(feed,feed_freq);
+	
+
+}
 static uint8_t  usbd_audio_SOF (void *pdev)
 {     
 	u32 data;
@@ -829,7 +901,9 @@ static uint8_t  usbd_audio_SOF (void *pdev)
 		feed_state = 1;
 
 	}
-  
+
+
+  #if 0
     /* Start playing received packet */
     AUDIO_OUT_fops.AudioCmd((uint8_t*)(IsocOutRdPtr),  /* Samples buffer pointer */
                             AUDIO_OUT_PACKET,          /* Number of samples in Bytes */
@@ -860,6 +934,8 @@ static uint8_t  usbd_audio_SOF (void *pdev)
       IsocOutRdPtr = IsocOutBuff;
       IsocOutWrPtr = IsocOutBuff;
     }
+
+	#endif
   }
   
   return USBD_OK;

@@ -27,6 +27,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usb_dcd_int.h"
+#include <stdio.h>
+#include "usbd_conf.h"
 /** @addtogroup USB_OTG_DRIVER
 * @{
 */
@@ -435,8 +437,17 @@ static uint32_t DCD_HandleInEP_ISR(USB_OTG_CORE_HANDLE *pdev)
     if (ep_intr&0x1) /* In ITR */
     {
       diepint.d32 = DCD_ReadDevInEP(pdev , epnum); /* Get In ITR status */
+
+
+	 //if(epnum == (AUDIO_FEED_UP_EP & 0x7f)){
+	//	printf("ep2 in int 0x%x\r\n",diepint.d32);
+	//  }
+
+	 
       if ( diepint.b.xfercompl )
       {
+
+
         fifoemptymsk = 0x1 << epnum;
         USB_OTG_MODIFY_REG32(&pdev->regs.DREGS->DIEPEMPMSK, fifoemptymsk, 0);
         CLEAR_IN_EP_INTR(epnum, xfercompl);
@@ -452,6 +463,13 @@ static uint32_t DCD_HandleInEP_ISR(USB_OTG_CORE_HANDLE *pdev)
           }
         }           
       }
+
+	 // if(epnum == 2 && diepint.b.intktxfemp ){
+		//printf("ep 2 IN \r\n");
+
+		//DCD_EP_Tx (pdev, 0x82, pbuf, len);
+		
+	  //}
       if ( diepint.b.timeout )
       {
         CLEAR_IN_EP_INTR(epnum, timeout);

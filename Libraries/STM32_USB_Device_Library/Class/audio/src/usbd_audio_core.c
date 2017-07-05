@@ -160,6 +160,46 @@ static uint32_t PlayFlag = 0;
 static __IO uint32_t  usbd_audio_AltSet = 0;
 static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE];
 
+
+static char feed[16];
+
+uint8_t  usbd_audio_IN_Incplt(void *pdev)
+{
+
+#if 0
+  USB_OTG_DSTS_TypeDef dsts;  
+  __IO USB_OTG_DEPCTL_TypeDef depctl;
+  USB_OTG_CORE_HANDLE *ppdev = pdev; 
+  dsts.d32 = USB_OTG_READ_REG32(&ppdev->regs.DREGS->DSTS);
+
+
+	
+	depctl.d32	= USB_OTG_READ_REG32(&ppdev->regs.INEP_REGS[AUDIO_FEED_UP_EP & 0x7F]->DIEPCTL);
+	
+	/* Check if this is the first packet */
+	if (((dsts.b.soffn) & 1) == depctl.b.dpid)
+	{	   
+	  /* EP disable */		 
+	  depctl.b.snak = 1;
+	  depctl.b.epdis = 1;
+	  USB_OTG_WRITE_REG32(&ppdev->regs.INEP_REGS[AUDIO_FEED_UP_EP & 0x7F]->DIEPCTL, depctl.d32);
+	  
+	  /*flush endpoint*/
+	  DCD_EP_Flush(ppdev, AUDIO_FEED_UP_EP);
+	  
+	  /*Restart transfer  (EVEN/ODD frame scheduling will be done here when preparing packet) */	  
+	  DCD_EP_Tx (ppdev,
+				 AUDIO_FEED_UP_EP,
+				 feed,
+				 3);
+	}  
+
+#endif
+	  return USBD_OK;
+
+}
+
+
 /* AUDIO interface class callbacks structure */
 USBD_Class_cb_TypeDef  AUDIO_cb = 
 {
@@ -171,7 +211,7 @@ USBD_Class_cb_TypeDef  AUDIO_cb =
   usbd_audio_DataIn,
   usbd_audio_DataOut,
   usbd_audio_SOF,
-  NULL,
+  usbd_audio_IN_Incplt,
   usbd_audio_OUT_Incplt,   
   USBD_audio_GetCfgDesc,
 #ifdef USB_OTG_HS_CORE  
@@ -276,7 +316,7 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   USB_INTERFACE_DESCRIPTOR_TYPE,        /* bDescriptorType */
   0x01,                                 /* bInterfaceNumber */
   0x01,                                 /* bAlternateSetting */
-  0x01,                                 /* bNumEndpoints */
+  0x02,                                 /* bNumEndpoints */
   USB_DEVICE_CLASS_AUDIO,               /* bInterfaceClass */
   AUDIO_SUBCLASS_AUDIOSTREAMING,        /* bInterfaceSubClass */
   AUDIO_PROTOCOL_UNDEFINED,             /* bInterfaceProtocol */
@@ -311,13 +351,14 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   AUDIO_STANDARD_ENDPOINT_DESC_SIZE,    /* bLength */
   USB_ENDPOINT_DESCRIPTOR_TYPE,         /* bDescriptorType */
   AUDIO_OUT_EP,                         /* bEndpointAddress 1 out endpoint*/
-  USB_ENDPOINT_TYPE_ISOCHRONOUS,        /* bmAttributes */
+  USB_ENDPOINT_TYPE_ISOCHRONOUS  | 0x04,        /* bmAttributes */
   AUDIO_PACKET_SZE(USBD_AUDIO_FREQ),    /* wMaxPacketSize in Bytes (Freq(Samples)*2(Stereo)*2(HalfWord)) */
   0x01,                                 /* bInterval */
-  0x00,                                 /* bRefresh */
-  0x00,                                 /* bSynchAddress */
+  0x0,                                 /* bRefresh */
+  AUDIO_FEED_UP_EP,                                 /* bSynchAddress */
   /* 09 byte*/
-  
+
+ 
   /* Endpoint - Audio Streaming Descriptor*/
   AUDIO_STREAMING_ENDPOINT_DESC_SIZE,   /* bLength */
   AUDIO_ENDPOINT_DESCRIPTOR_TYPE,       /* bDescriptorType */
@@ -327,6 +368,17 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   0x00,                                 /* wLockDelay */
   0x00,
   /* 07 byte*/
+
+	  /* ##Endpoint 2 for feedback - Standard Descriptor */
+  AUDIO_STANDARD_ENDPOINT_DESC_SIZE,  /* bLength */
+  USB_ENDPOINT_DESCRIPTOR_TYPE,         	  /* bDescriptorType */
+  AUDIO_FEED_UP_EP,                        /* bEndpointAddress 2 in endpoint*/
+  0x11,                               /* bmAttributes */
+  3,0,                                /* wMaxPacketSize in Bytes 3 */
+  1,                                  /* bInterval 1ms*/
+  4,            /* bRefresh 1 ~ 9,power of 2*/
+  0x00,                               /* bSynchAddress */
+  /* 09 byte*/
 } ;
 
 /**
@@ -337,6 +389,131 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   * @{
   */ 
 
+#if 0
+void I2S_GPIO_Init(void)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+	//ws clk data
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_15; 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource12, GPIO_AF_SPI2);  
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource13, GPIO_AF_SPI2);
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource15, GPIO_AF_SPI2);
+
+// mclk config
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6; 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);	 
+	GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_SPI2); 
+
+}
+
+
+void I2S_user_Init(u32 sample ,u32 frame_bits)
+{
+  	I2S_InitTypeDef I2S_InitStructure;
+	u16 uint16_t= 0;
+
+	I2S_GPIO_Init();
+
+
+
+	switch(frame_bits){
+	    case 32 :
+	        uint16_t = I2S_DataFormat_32b;
+	        break;
+	    case 16 :
+	        uint16_t = I2S_DataFormat_16b;
+	        break;
+
+	     default :
+	        printf("I2S_user_Init: err frame bit frame_bits\r\n",frame_bits);
+	        break;
+	};
+	
+
+	
+  	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
+  	SPI_I2S_DeInit(SPI2);
+  	I2S_InitStructure.I2S_Standard = I2S_Standard_MSB;
+  	I2S_InitStructure.I2S_DataFormat = uint16_t;
+  	I2S_InitStructure.I2S_CPOL = I2S_CPOL_Low;
+  	I2S_InitStructure.I2S_Mode = I2S_Mode_MasterTx;
+  	I2S_InitStructure.I2S_MCLKOutput = I2S_MCLKOutput_Enable; 
+	I2S_InitStructure.I2S_AudioFreq = sample; 
+  	I2S_Init(SPI2, &I2S_InitStructure);
+
+	//I2S_Cmd(SPI2,ENABLE);
+}
+void Audio_DMA_Init(u32 frame_bit)  
+{ 
+  	NVIC_InitTypeDef NVIC_InitStructure;
+	u32 data_size;
+
+	if(frame_bit == 16)
+		data_size = DMA_MemoryDataSize_HalfWord;
+	else if(frame_bit == 32)
+		data_size = DMA_MemoryDataSize_Word;
+	else{
+		printf("dma init err\r\n");
+		return ;
+	}
+  	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE); 
+  	DMA_Cmd(DMA1_Stream4, DISABLE);
+  	DMA_DeInit(DMA1_Stream4);
+  	DMA_InitStructure.DMA_Channel = DMA_Channel_0;  
+  	DMA_InitStructure.DMA_PeripheralBaseAddr = 0x4000380C;
+  	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)0;
+  	DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;
+  	DMA_InitStructure.DMA_BufferSize = (uint32_t)0xFFFE;
+  	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+  	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+  	DMA_InitStructure.DMA_PeripheralDataSize = data_size;
+  	DMA_InitStructure.DMA_MemoryDataSize = data_size; 
+  	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular; 
+  	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+  	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;         
+  	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull;
+  	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
+  	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;  
+  	DMA_Init(DMA1_Stream4, &DMA_InitStructure);  
+	
+  	DMA_ITConfig(DMA1_Stream4, DMA_IT_TC | DMA_IT_HT, ENABLE);
+
+  	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream4_IRQn;
+  	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  	NVIC_Init(&NVIC_InitStructure);   
+  	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Tx, ENABLE);
+}
+
+void AUDIO_Init(u32 audio_sample,u32 frame_bit)
+{
+	I2S_user_Init(audio_sample,frame_bit);
+	Audio_DMA_Init(frame_bit);	
+}
+void Audio_MAL_Play(u32 Addr, u32 Size)
+{         
+  	DMA_InitStructure.DMA_Memory0BaseAddr=(uint32_t)Addr;
+  	DMA_InitStructure.DMA_BufferSize=(uint32_t)Size/(WAVE_Format.BitsPerSample/8);
+  	DMA_Init(DMA1_Stream4,&DMA_InitStructure);
+  	DMA_Cmd(DMA1_Stream4,ENABLE); 
+  	if ((SPI2->I2SCFGR & I2S_ENABLE_MASK)==0)I2S_Cmd(SPI2,ENABLE);
+}
+
+#endif
+
+
 /**
 * @brief  usbd_audio_Init
 *         Initilaizes the AUDIO interface.
@@ -344,9 +521,11 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
 * @param  cfgidx: Configuration index
 * @retval status
 */
+//u8 feed[16];
 static uint8_t  usbd_audio_Init (void  *pdev, 
                                  uint8_t cfgidx)
 {  
+u32 data = 0;
   /* Open EP OUT */
   DCD_EP_Open(pdev,
               AUDIO_OUT_EP,
@@ -354,6 +533,21 @@ static uint8_t  usbd_audio_Init (void  *pdev,
               USB_OTG_EP_ISOC);
 
 
+
+  /* Open EP OUT */
+  DCD_EP_Open(pdev,
+              AUDIO_FEED_UP_EP,
+              AUDIO_FEED_UP_PACKET,
+              USB_OTG_EP_ISOC);
+
+DCD_EP_Flush(pdev, AUDIO_FEED_UP_EP);
+
+#if 0
+DCD_EP_Tx (pdev,
+		   AUDIO_FEED_UP_EP,
+		   feed,
+		   3);
+#endif
 
   /* Initialize the Audio output Hardware layer */
  // if (AUDIO_OUT_fops.Init(USBD_AUDIO_FREQ, DEFAULT_VOLUME, 0) != USBD_OK)
@@ -381,7 +575,9 @@ static uint8_t  usbd_audio_DeInit (void  *pdev,
                                    uint8_t cfgidx)
 { 
   DCD_EP_Close (pdev , AUDIO_OUT_EP);
-  
+
+  DCD_EP_Close(pdev,AUDIO_FEED_UP_EP);
+
   /* DeInitialize the Audio output Hardware layer */
   if (AUDIO_OUT_fops.DeInit(0) != USBD_OK)
   {
@@ -535,6 +731,25 @@ static uint8_t  usbd_audio_EP0_RxReady (void  *pdev)
   */
 static uint8_t  usbd_audio_DataIn (void *pdev, uint8_t epnum)
 {
+	u32 data;
+
+
+  if (epnum == (AUDIO_FEED_UP_EP & 0x7F))
+  {
+    if (((USB_OTG_CORE_HANDLE*)pdev)->dev.device_status == USB_OTG_CONFIGURED )
+    {
+      /* Flush endpoint */
+      DCD_EP_Flush(pdev, AUDIO_FEED_UP_EP);
+      
+      /* Prepare next data to be sent */
+      DCD_EP_Tx (pdev,
+                 AUDIO_FEED_UP_EP,
+                 feed,
+                 3);      
+    }
+  }
+
+
   return USBD_OK;
 }
 
@@ -587,13 +802,34 @@ static uint8_t  usbd_audio_DataOut (void *pdev, uint8_t epnum)
   * @param  epnum: endpoint number
   * @retval status
   */
+  
 static uint8_t  usbd_audio_SOF (void *pdev)
 {     
+	u32 data;
+	static u8 feed_state = 0;
   /* Check if there are available data in stream buffer.
     In this function, a single variable (PlayFlag) is used to avoid software delays.
     The play operation must be executed as soon as possible after the SOF detection. */
   if (PlayFlag)
   {      
+
+	if(feed_state == 0){
+	    	data = 47;
+	  	data <<= 14;
+	 	 *(u32 *)feed = data;
+
+		DCD_EP_Flush(pdev, AUDIO_FEED_UP_EP);
+		
+		/* Prepare data to be sent for the feedback endpoint */
+		DCD_EP_Tx (pdev,
+				   AUDIO_FEED_UP_EP,
+				   feed,
+				   3);
+
+		feed_state = 1;
+
+	}
+  
     /* Start playing received packet */
     AUDIO_OUT_fops.AudioCmd((uint8_t*)(IsocOutRdPtr),  /* Samples buffer pointer */
                             AUDIO_OUT_PACKET,          /* Number of samples in Bytes */

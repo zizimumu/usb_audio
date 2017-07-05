@@ -571,13 +571,6 @@
         </Group>
         <Group>
           <GroupName>STM32_EVAL</GroupName>
-          <Files>
-            <File>
-              <FileName>lcd_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>STM32F10x</GroupName>
@@ -1797,13 +1790,6 @@
         </Group>
         <Group>
           <GroupName>STM32_EVAL</GroupName>
-          <Files>
-            <File>
-              <FileName>lcd_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>STM32F10x</GroupName>
@@ -3023,13 +3009,6 @@
         </Group>
         <Group>
           <GroupName>STM32_EVAL</GroupName>
-          <Files>
-            <File>
-              <FileName>lcd_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>STM32F10x</GroupName>
@@ -4249,13 +4228,6 @@
         </Group>
         <Group>
           <GroupName>STM32_EVAL</GroupName>
-          <Files>
-            <File>
-              <FileName>lcd_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>STM32F10x</GroupName>

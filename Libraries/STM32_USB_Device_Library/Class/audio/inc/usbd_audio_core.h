@@ -53,6 +53,7 @@
 
 /* AudioFreq * DataSize (2 bytes) * NumChannels (Stereo: 2) */
 #define AUDIO_OUT_PACKET                              (uint32_t)(((USBD_AUDIO_FREQ * 2 * 2) /1000)) 
+#define AUDIO_FEED_UP_PACKET 3
 
 /* Number of sub-packets in the audio transfer buffer. You can modify this value but always make sure
   that it is an even number and higher than 3 */
@@ -60,7 +61,7 @@
 /* Total size of the audio transfer buffer */
 #define TOTAL_OUT_BUF_SIZE                           ((uint32_t)(AUDIO_OUT_PACKET * OUT_PACKET_NUM))
 
-#define AUDIO_CONFIG_DESC_SIZE                        (109 + 6)
+#define AUDIO_CONFIG_DESC_SIZE                        (109 + 6 + 9)
 #define AUDIO_INTERFACE_DESC_SIZE                     9
 #define USB_AUDIO_DESC_SIZ                            0x09
 #define AUDIO_STANDARD_ENDPOINT_DESC_SIZE             0x09

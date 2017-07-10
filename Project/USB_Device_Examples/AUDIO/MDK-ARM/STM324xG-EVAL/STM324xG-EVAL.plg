@@ -4,397 +4,151 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 E:\STM32_USB-Host-Device_Lib_V2.1.0\STM32_USB-Host-Device_Lib_V2.1.0\Project\USB_Device_Examples\AUDIO\MDK-ARM\usbd_audio.uvproj
-Project File Date:  07/03/2017
+Project File Date:  07/07/2017
 
 <h2>Output:</h2>
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Failed!
-Internal command error
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-linking...
-Program Size: Code=13568 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 0 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-linking...
-Program Size: Code=13568 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 0 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(488): warning:  #177-D: variable "data" was declared but never referenced
-linking...
-Program Size: Code=13548 RO-data=5348 RW-data=568 ZI-data=4424  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 1 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
 Build target 'STM324xG-EVAL_USBD-FS'
 compiling usb_dcd_int.c...
-..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(442): warning:  #223-D: function "printf" declared implicitly
-linking...
-Program Size: Code=13548 RO-data=5348 RW-data=568 ZI-data=4424  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 1 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'STM324xG-EVAL_USBD-FS'
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(612): warning:  #177-D: variable "free" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(613): warning:  #177-D: variable "data" was declared but never referenced
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(488): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(671): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(847): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(831): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(832): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1006): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(988): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(561): warning:  #177-D: function "Audio_Play" was declared but never referenced
 linking...
-Program Size: Code=13580 RO-data=5348 RW-data=568 ZI-data=4424  
+Program Size: Code=19876 RO-data=11492 RW-data=628 ZI-data=95124  
 FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 1 Warning(s).
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 9 Warning(s).
 Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
 Erase Done.
 Programming Done.
 Verify OK.
-Application running ...
 Build target 'STM324xG-EVAL_USBD-FS'
 compiling usb_dcd_int.c...
-..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(441): warning:  #223-D: function "printf" declared implicitly
-linking...
-Program Size: Code=13584 RO-data=5348 RW-data=568 ZI-data=4424  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 1 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(662): warning:  #223-D: function "Audio_Play" declared implicitly
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(663): error:  #20: identifier "feed_freq" is undefined
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(664): warning:  #223-D: function "FEED_FREQ_2_BUFF" declared implicitly
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(664): error:  #20: identifier "feed" is undefined
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(613): warning:  #177-D: variable "data" was declared but never referenced
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(672): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(848): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(832): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(833): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(921): warning:  #2969-D: "\" followed by white space is not a line splice
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(922): error:  #169: expected a declaration
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(950): error:  #513: a value of type "uint8_t *" cannot be assigned to an entity of type "u32"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(952): error:  #42: operand types are incompatible ("u32" and "u8 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(952): error:  #32: expression must have arithmetic type
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(955): error:  #42: operand types are incompatible ("u32" and "u8 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(956): error:  #32: expression must have arithmetic type
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(961): error:  #7: unrecognized token
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(961): error:  #29: expected an expression
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(964): error:  #20: identifier "FEED_STEP" is undefined
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(971): error:  #513: a value of type "u8 *" cannot be assigned to an entity of type "u32"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(977): error:  #20: identifier "FEED_STEP" is undefined
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(980): error:  #7: unrecognized token
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(980): error:  #29: expected an expression
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1009): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(993): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(562): warning:  #177-D: function "Audio_Play" was declared but never referenced
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 15 Errors, 11 Warning(s).
+Target not created
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usb_dcd_int.c...
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(668): warning:  #223-D: function "FEED_FREQ_2_BUFF" declared implicitly
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(617): warning:  #177-D: variable "data" was declared but never referenced
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(672): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(848): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(832): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(833): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(921): warning:  #2969-D: "\" followed by white space is not a line splice
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(922): error:  #169: expected a declaration
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(950): error:  #513: a value of type "uint8_t *" cannot be assigned to an entity of type "u32"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(952): error:  #42: operand types are incompatible ("u32" and "u8 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(952): error:  #32: expression must have arithmetic type
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(955): error:  #42: operand types are incompatible ("u32" and "u8 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(956): error:  #32: expression must have arithmetic type
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(961): error:  #7: unrecognized token
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(961): error:  #29: expected an expression
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(964): error:  #20: identifier "FEED_STEP" is undefined
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(971): error:  #513: a value of type "u8 *" cannot be assigned to an entity of type "u32"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(977): error:  #20: identifier "FEED_STEP" is undefined
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(980): error:  #7: unrecognized token
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(980): error:  #29: expected an expression
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1009): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(993): warning:  #177-D: variable "data" was declared but never referenced
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 13 Errors, 9 Warning(s).
+Target not created
 Build target 'STM324xG-EVAL_USBD-FS'
 compiling app.c...
 compiling stm32fxxx_it.c...
 ..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usb_bsp.c...
-compiling usbd_usr.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usbd_desc.c...
 compiling usb_dcd_int.c...
-..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(441): warning:  #223-D: function "printf" declared implicitly
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(617): warning:  #177-D: variable "data" was declared but never referenced
 compiling usbd_audio_out_if.c...
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(488): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(672): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(848): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(832): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(833): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(921): warning:  #2969-D: "\" followed by white space is not a line splice
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(922): error:  #169: expected a declaration
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(950): error:  #513: a value of type "uint8_t *" cannot be assigned to an entity of type "u32"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(952): error:  #42: operand types are incompatible ("u32" and "u8 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(952): error:  #32: expression must have arithmetic type
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(955): error:  #42: operand types are incompatible ("u32" and "u8 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(956): error:  #32: expression must have arithmetic type
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(961): error:  #7: unrecognized token
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(961): error:  #29: expected an expression
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(964): error:  #20: identifier "FEED_STEP" is undefined
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(971): error:  #513: a value of type "u8 *" cannot be assigned to an entity of type "u32"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(977): error:  #20: identifier "FEED_STEP" is undefined
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(980): error:  #7: unrecognized token
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(980): error:  #29: expected an expression
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1009): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(993): warning:  #177-D: variable "data" was declared but never referenced
 compiling usbd_req.c...
-compiling usbd_core.c...
-compiling usbd_ioreq.c...
-linking...
-Program Size: Code=13584 RO-data=5348 RW-data=568 ZI-data=4424  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 4 Warning(s).
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usb_dcd_int.c...
-linking...
-Program Size: Code=13584 RO-data=5348 RW-data=568 ZI-data=4424  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 0 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(488): warning:  #177-D: variable "data" was declared but never referenced
-linking...
-Program Size: Code=13584 RO-data=5348 RW-data=568 ZI-data=4424  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 1 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling app.c...
-compiling stm32fxxx_it.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usb_bsp.c...
-compiling usbd_usr.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usbd_desc.c...
-compiling usb_dcd_int.c...
-compiling usb_core.c...
-compiling usb_dcd.c...
-compiling usbd_audio_out_if.c...
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(488): warning:  #177-D: variable "data" was declared but never referenced
-compiling usbd_req.c...
-compiling usbd_core.c...
-compiling usbd_ioreq.c...
-linking...
-Program Size: Code=13580 RO-data=5348 RW-data=568 ZI-data=4424  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 3 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(488): warning:  #177-D: variable "data" was declared but never referenced
-linking...
-Program Size: Code=13592 RO-data=5348 RW-data=568 ZI-data=4424  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 1 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'STM324xG-EVAL_USBD-FS'
-linking...
-Program Size: Code=13592 RO-data=5348 RW-data=568 ZI-data=4424  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 0 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(488): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(748): error:  #147: declaration is incompatible with "u8 feed[16]" (declared at line 484)
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(762): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 1 Errors, 2 Warning(s).
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 13 Errors, 9 Warning(s).
 Target not created
 Build target 'STM324xG-EVAL_USBD-FS'
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(488): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(762): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-linking...
-Program Size: Code=13612 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 2 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(167): error:  #169: expected a declaration
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(502): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(776): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 1 Errors, 2 Warning(s).
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(672): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(848): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(832): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(833): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(951): error:  #513: a value of type "u32" cannot be assigned to an entity of type "u32 *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(953): error:  #42: operand types are incompatible ("u32 *" and "u8 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(953): error:  #42: operand types are incompatible ("u32 *" and "u8 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(953): error:  #42: operand types are incompatible ("u8 *" and "u32 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(956): error:  #42: operand types are incompatible ("u32 *" and "u8 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(957): error:  #42: operand types are incompatible ("u32 *" and "u8 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(962): error:  #20: identifier "FEED_STEP" is undefined
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(965): error:  #20: identifier "FEED_STEP" is undefined
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(972): error:  #42: operand types are incompatible ("u8 *" and "u32 *")
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(978): error:  #20: identifier "FEED_STEP" is undefined
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(981): error:  #20: identifier "FEED_STEP" is undefined
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1010): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(994): warning:  #177-D: variable "data" was declared but never referenced
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 11 Errors, 6 Warning(s).
 Target not created
 Build target 'STM324xG-EVAL_USBD-FS'
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(172): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(174): warning:  #940-D: missing return statement at end of non-void function "usbd_audio_IN_Incplt"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(502): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(776): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(672): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(848): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(832): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(833): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1010): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(994): warning:  #177-D: variable "data" was declared but never referenced
 linking...
-Program Size: Code=13632 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 4 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling app.c...
-compiling stm32fxxx_it.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usb_bsp.c...
-compiling usbd_usr.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usbd_desc.c...
-compiling usbd_audio_out_if.c...
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(172): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(174): warning:  #940-D: missing return statement at end of non-void function "usbd_audio_IN_Incplt"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(502): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(776): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-compiling usbd_req.c...
-compiling usbd_core.c...
-compiling usbd_ioreq.c...
-linking...
-Program Size: Code=13632 RO-data=5348 RW-data=568 ZI-data=4440  
+Program Size: Code=20544 RO-data=11492 RW-data=632 ZI-data=95128  
 FromELF: creating hex file...
 ".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 6 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usb_dcd_int.c...
-..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(441): error:  #20: identifier "AUDIO_FEED_UP_EP" is undefined
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 1 Errors, 0 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usb_dcd_int.c...
-linking...
-Program Size: Code=13632 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 0 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(172): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(174): warning:  #940-D: missing return statement at end of non-void function "usbd_audio_IN_Incplt"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(502): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(716): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(785): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-linking...
-Program Size: Code=13668 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 5 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(172): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(174): warning:  #940-D: missing return statement at end of non-void function "usbd_audio_IN_Incplt"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(502): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(716): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-linking...
-Program Size: Code=13668 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 4 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(193): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(197): warning:  #940-D: missing return statement at end of non-void function "usbd_audio_IN_Incplt"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(543): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(525): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(747): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(734): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(825): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-linking...
-Program Size: Code=13728 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 7 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usb_dcd_int.c...
-linking...
-Program Size: Code=13696 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 0 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling app.c...
-compiling stm32fxxx_it.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usb_bsp.c...
-compiling usbd_usr.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usbd_desc.c...
-compiling usb_dcd_int.c...
-compiling usb_core.c...
-compiling usb_dcd.c...
-compiling usbd_audio_out_if.c...
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(193): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(197): warning:  #940-D: missing return statement at end of non-void function "usbd_audio_IN_Incplt"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(543): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(525): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(747): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(734): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(825): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-compiling usbd_req.c...
-..\inc\usbd_conf.h(33): error:  #5: cannot open source input file "..\inc\usb_conf.h": Permission denied
-compiling usbd_core.c...
-compiling usbd_ioreq.c...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 1 Errors, 9 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_req.c...
-linking...
-Program Size: Code=13700 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 0 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(193): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(197): warning:  #940-D: missing return statement at end of non-void function "usbd_audio_IN_Incplt"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(543): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(525): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(747): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(734): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(826): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-linking...
-Program Size: Code=13708 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 7 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(546): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(528): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(750): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(737): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(829): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-linking...
-Program Size: Code=13632 RO-data=5348 RW-data=568 ZI-data=4440  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 5 Warning(s).
 Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
 Erase Done.
 Programming Done.
@@ -410,14 +164,17 @@ compiling misc.c...
 compiling usbd_desc.c...
 compiling stm324xg_usb_audio_codec.c...
 compiling usb_dcd_int.c...
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(617): warning:  #177-D: variable "data" was declared but never referenced
 compiling usb_core.c...
 compiling usb_dcd.c...
 compiling usbd_audio_out_if.c...
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(528): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(747): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(734): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(826): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(672): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(848): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(832): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(833): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1010): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(994): warning:  #177-D: variable "data" was declared but never referenced
 compiling usbd_req.c...
 compiling usbd_core.c...
 compiling usbd_ioreq.c...
@@ -441,218 +198,282 @@ compiling stm324xg_eval.c...
 compiling stm324xg_eval_ioe.c...
 compiling stm324xg_eval_lcd.c...
 linking...
-Program Size: Code=13616 RO-data=5348 RW-data=568 ZI-data=4440  
+Program Size: Code=20548 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 9 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(672): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(848): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(832): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(833): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(998): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(982): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20400 RO-data=11492 RW-data=632 ZI-data=95128  
 FromELF: creating hex file...
 ".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 6 Warning(s).
 Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
 Erase Done.
 Programming Done.
 Verify OK.
 Build target 'STM324xG-EVAL_USBD-FS'
-compiling app.c...
-..\src\app.c(216): error:  #20: identifier "read_cnt" is undefined
-..\src\app.c(216): error:  #20: identifier "IsocOutBuff" is undefined
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(441): error:  #18: expected a ")"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(444): error:  #18: expected a ")"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(448): warning:  #225-D: the format string ends before this argument
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(456): error:  #18: expected a ")"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(458): error:  #18: expected a ")"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(459): error:  #18: expected a ")"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(460): error:  #18: expected a ")"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(486): error:  #20: identifier "DMA_InitStructure" is undefined
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(520): error:  #20: identifier "DMA_InitStructure" is undefined
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(524): error:  #20: identifier "I2S_ENABLE_MASK" is undefined
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(541): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(762): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(749): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(798): error:  #29: expected an expression
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(802): warning:  #12-D: parsing restarts here after previous syntax error
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(802): error:  #65: expected a ";"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(822): error:  #167: argument of type "uint8_t *" is incompatible with parameter of type "u32"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(871): warning:  #940-D: missing return statement at end of non-void function "cacu_feed_up"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(892): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 14 Errors, 7 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling app.c...
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(448): warning:  #225-D: the format string ends before this argument
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(486): error:  #20: identifier "DMA_InitStructure" is undefined
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(520): error:  #20: identifier "DMA_InitStructure" is undefined
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(524): error:  #20: identifier "I2S_ENABLE_MASK" is undefined
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(541): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(762): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(749): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(798): error:  #29: expected an expression
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(802): warning:  #12-D: parsing restarts here after previous syntax error
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(802): error:  #65: expected a ";"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(822): error:  #167: argument of type "uint8_t *" is incompatible with parameter of type "u32"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(871): warning:  #940-D: missing return statement at end of non-void function "cacu_feed_up"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(892): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 6 Errors, 7 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(486): error:  #20: identifier "DMA_InitStructure" is undefined
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(520): error:  #20: identifier "DMA_InitStructure" is undefined
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(524): error:  #20: identifier "I2S_ENABLE_MASK" is undefined
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(541): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(762): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(749): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(798): error:  #29: expected an expression
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(802): warning:  #12-D: parsing restarts here after previous syntax error
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(802): error:  #65: expected a ";"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(822): error:  #167: argument of type "uint8_t *" is incompatible with parameter of type "u32"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(871): warning:  #940-D: missing return statement at end of non-void function "cacu_feed_up"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(892): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 6 Errors, 6 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(526): error:  #20: identifier "I2S_ENABLE_MASK" is undefined
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(543): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(764): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(751): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(800): error:  #29: expected an expression
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(804): warning:  #12-D: parsing restarts here after previous syntax error
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(804): error:  #65: expected a ";"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(824): error:  #167: argument of type "uint8_t *" is incompatible with parameter of type "u32"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(873): warning:  #940-D: missing return statement at end of non-void function "cacu_feed_up"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(894): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 4 Errors, 6 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(545): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(766): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(753): warning:  #177-D: variable "data" was declared but never referenced
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(802): error:  #29: expected an expression
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(806): warning:  #12-D: parsing restarts here after previous syntax error
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(806): error:  #65: expected a ";"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(826): error:  #167: argument of type "uint8_t *" is incompatible with parameter of type "u32"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(875): warning:  #940-D: missing return statement at end of non-void function "cacu_feed_up"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(896): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 3 Errors, 6 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(766): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(826): error:  #167: argument of type "uint8_t *" is incompatible with parameter of type "u32"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(896): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 1 Errors, 2 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(766): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(896): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-linking...
-.\STM324xG-EVAL\STM324xG-EVAL.axf: Error: L6200E: Symbol Audio_MAL_Play multiply defined (by usbd_audio_core.o and stm324xg_usb_audio_codec.o).
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 1 Errors, 2 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(766): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(896): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-linking...
-.\STM324xG-EVAL\STM324xG-EVAL.axf: Error: L6406E: No space in execution regions with .ANY selector matching usbd_audio_core.o(.bss).
-.\STM324xG-EVAL\STM324xG-EVAL.axf: Error: L6407E: Sections of aggregate size 0x2588c bytes could not fit into .ANY selector(s).
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 2 Errors, 2 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(766): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(896): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-linking...
-Program Size: Code=14324 RO-data=5348 RW-data=568 ZI-data=95128  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 2 Warning(s).
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling app.c...
-compiling stm32fxxx_it.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usb_bsp.c...
-compiling usbd_usr.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usbd_desc.c...
 compiling usb_dcd_int.c...
-compiling usb_core.c...
-compiling usb_dcd.c...
-compiling usbd_audio_out_if.c...
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(617): warning:  #177-D: variable "data" was declared but never referenced
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(366): warning:  #69-D: integer conversion resulted in truncation
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(766): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(896): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-compiling usbd_req.c...
-compiling usbd_core.c...
-compiling usbd_ioreq.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(675): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(851): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(835): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(836): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1004): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(988): warning:  #177-D: variable "data" was declared but never referenced
 linking...
-Program Size: Code=14324 RO-data=5348 RW-data=568 ZI-data=95128  
+Program Size: Code=20388 RO-data=11492 RW-data=632 ZI-data=95128  
 FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 5 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 7 Warning(s).
 Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
 Erase Done.
 Programming Done.
 Verify OK.
 Build target 'STM324xG-EVAL_USBD-FS'
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(392): error:  #146: too many initializer values
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(768): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(898): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 1 Errors, 2 Warning(s).
-Target not created
-Rebuild target 'STM324xG-EVAL_USBD-FS'
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(675): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(851): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(835): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(836): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1015): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(999): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20444 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 6 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(675): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(851): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(835): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(836): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1015): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(999): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20452 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 6 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(675): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(851): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(835): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(836): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1018): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1002): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20464 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 6 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
 compiling app.c...
 compiling stm32fxxx_it.c...
 ..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usb_bsp.c...
-compiling usbd_usr.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling misc.c...
-compiling usbd_desc.c...
-compiling stm324xg_usb_audio_codec.c...
 compiling usb_dcd_int.c...
-compiling usb_core.c...
-compiling usb_dcd.c...
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(617): warning:  #177-D: variable "data" was declared but never referenced
 compiling usbd_audio_out_if.c...
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(392): error:  #146: too many initializer values
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(768): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(898): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(677): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(853): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(837): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(838): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1020): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1004): warning:  #177-D: variable "data" was declared but never referenced
 compiling usbd_req.c...
-compiling usbd_core.c...
-compiling usbd_ioreq.c...
-assembling startup_stm32f4xx.s...
-compiling system_stm32f4xx.c...
-compiling stm32f4xx_usart.c...
-compiling stm32f4xx_dma.c...
-compiling stm32f4xx_exti.c...
-compiling stm32f4xx_flash.c...
-compiling stm32f4xx_fsmc.c...
-compiling stm32f4xx_gpio.c...
-compiling stm32f4xx_i2c.c...
-compiling stm32f4xx_pwr.c...
-compiling stm32f4xx_rcc.c...
-compiling stm32f4xx_sdio.c...
-compiling stm32f4xx_spi.c...
-compiling stm32f4xx_tim.c...
-compiling stm32f4xx_syscfg.c...
-compiling stm324xg_eval_sdio_sd.c...
-compiling stm324xg_eval.c...
-compiling stm324xg_eval_ioe.c...
-compiling stm324xg_eval_lcd.c...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 1 Errors, 4 Warning(s).
-Target not created
+linking...
+Program Size: Code=20468 RO-data=11492 RW-data=632 ZI-data=35608  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 8 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling app.c...
+compiling stm32fxxx_it.c...
+..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
+compiling usb_dcd_int.c...
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(617): warning:  #177-D: variable "data" was declared but never referenced
+compiling usbd_audio_out_if.c...
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(681): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(857): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(841): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(842): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1024): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1008): warning:  #177-D: variable "data" was declared but never referenced
+compiling usbd_req.c...
+linking...
+Program Size: Code=20512 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 8 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
 Build target 'STM324xG-EVAL_USBD-FS'
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(768): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(898): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(681): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(857): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(841): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(842): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1024): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1008): warning:  #177-D: variable "data" was declared but never referenced
 linking...
-Program Size: Code=14324 RO-data=5348 RW-data=568 ZI-data=95128  
+Program Size: Code=20504 RO-data=11492 RW-data=632 ZI-data=95128  
 FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 2 Warning(s).
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 6 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usb_dcd_int.c...
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(617): warning:  #177-D: variable "data" was declared but never referenced
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(681): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(857): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(841): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(842): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1024): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1008): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20520 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 7 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(681): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(857): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(841): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(842): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1027): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1011): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20520 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 6 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(681): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(857): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(841): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(842): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1027): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1011): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20528 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 6 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usb_dcd_int.c...
+..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(617): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20532 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 1 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(681): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(857): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(841): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(842): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(963): warning:  #550-D: variable "tmp1" was set but never used
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(963): warning:  #550-D: variable "tmp2" was set but never used
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1030): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1014): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20544 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 8 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(681): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(857): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(841): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(842): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(963): warning:  #550-D: variable "tmp1" was set but never used
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(963): warning:  #550-D: variable "tmp2" was set but never used
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1030): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1014): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20544 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 8 Warning(s).
+Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(681): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(857): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(841): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(842): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(963): warning:  #550-D: variable "tmp1" was set but never used
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(963): warning:  #550-D: variable "tmp2" was set but never used
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1030): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1014): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20544 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 8 Warning(s).
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling usbd_audio_core.c...
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(681): warning:  #177-D: variable "dev" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(857): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(841): warning:  #177-D: variable "cnt" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(842): warning:  #177-D: variable "data" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(963): warning:  #177-D: variable "tmp1" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(963): warning:  #177-D: variable "tmp2" was declared but never referenced
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1029): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(1013): warning:  #177-D: variable "data" was declared but never referenced
+linking...
+Program Size: Code=20532 RO-data=11492 RW-data=632 ZI-data=95128  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 8 Warning(s).
 Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
 Erase Done.
 Programming Done.

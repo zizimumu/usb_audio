@@ -29,6 +29,8 @@
 #include "usb_dcd_int.h"
 #include <stdio.h>
 #include "usbd_conf.h"
+#include "usbd_audio_core.h"
+
 /** @addtogroup USB_OTG_DRIVER
 * @{
 */
@@ -597,11 +599,22 @@ static uint32_t DCD_HandleSof_ISR(USB_OTG_CORE_HANDLE *pdev)
 * @param  pdev: device instance
 * @retval status
 */
+extern u32 total_size ;
+extern u8 *wr_buf_pt ;
+extern uint32_t PlayFlag;
+extern uint8_t  IsocOutBuff [AUDIO_OUT_PACKET*MAX_PACKET_NUM];
+extern u32 last_size;
+extern u32 feed_freq;
+extern void Audio_Play(u32 Addr, u32 Size);
+extern char feed[16];
+
 static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
 {
   USB_OTG_GINTMSK_TypeDef  int_mask;
   USB_OTG_DRXSTS_TypeDef   status;
   USB_OTG_EP *ep;
+  u32 free;
+  u32 data;
   
   /* Disable the Rx Status Queue Level interrupt */
   int_mask.d32 = 0;
@@ -617,16 +630,54 @@ static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
   {
   case STS_GOUT_NAK:
     break;
+  case STS_XFER_COMP:
   case STS_DATA_UPDT:
-    if (status.b.bcnt)
+    if (status.b.bcnt &&( (status.b.epnum & 0x7f) ==  (AUDIO_OUT_EP & 0x7f))) //&& ((status.b.epnum &0x7f) == (AUDIO_FEED_UP_EP & 0x7f)))
     {
-      USB_OTG_ReadPacket(pdev,ep->xfer_buff, status.b.bcnt);
-      ep->xfer_buff += status.b.bcnt;
-      ep->xfer_count += status.b.bcnt;
+
+	#if 1
+	 free = IsocOutBuff + sizeof(IsocOutBuff) - wr_buf_pt;
+	if(free >= status.b.bcnt){
+		USB_OTG_ReadPacket(pdev,wr_buf_pt, status.b.bcnt);
+		wr_buf_pt += status.b.bcnt;
+	}
+	else{
+		USB_OTG_ReadPacket(pdev,wr_buf_pt, free );
+		
+		wr_buf_pt = IsocOutBuff;
+		USB_OTG_ReadPacket(pdev,wr_buf_pt, status.b.bcnt - free );
+
+		wr_buf_pt += (status.b.bcnt - free);
+	}
+	#endif
+	//USB_OTG_ReadPacket(pdev,IsocOutBuff, status.b.bcnt);
+
+	
+	ep->xfer_buff += status.b.bcnt;
+	ep->xfer_count += status.b.bcnt;
+
+	total_size += status.b.bcnt;
+	last_size = status.b.bcnt;
+
+	if ((PlayFlag == 0) && (wr_buf_pt >=  (IsocOutBuff + sizeof(IsocOutBuff) / 2) ))
+	{
+		PlayFlag = 1;
+		Audio_Play((u32)IsocOutBuff,sizeof(IsocOutBuff));
+		feed_freq = USBD_AUDIO_FREQ;
+		FEED_FREQ_2_BUFF(feed,feed_freq);
+
+	}
+
+    }
+    else {
+		USB_OTG_ReadPacket(pdev,ep->xfer_buff, status.b.bcnt );
+		ep->xfer_buff += status.b.bcnt;
+		ep->xfer_count += status.b.bcnt;
+
     }
     break;
-  case STS_XFER_COMP:
-    break;
+  //case STS_XFER_COMP:
+  //  break;
   case STS_SETUP_COMP:
     break;
   case STS_SETUP_UPDT:

@@ -171,6 +171,10 @@ USB_OTG_STS USB_OTG_WritePacket(USB_OTG_CORE_HANDLE *pdev,
                                 uint16_t            len)
 {
   USB_OTG_STS status = USB_OTG_OK;
+
+  if(len == 0)
+  	return USB_OTG_OK;
+  
   if (pdev->cfg.dma_enable == 0)
   {
     uint32_t count32b= 0 , i= 0;
@@ -200,9 +204,12 @@ void *USB_OTG_ReadPacket(USB_OTG_CORE_HANDLE *pdev,
 {
   uint32_t i=0;
   uint32_t count32b = (len + 3) / 4;
-  
+
   __IO uint32_t *fifo = pdev->regs.DFIFO[0];
-  
+
+    if(len ==0)
+  	return (void *)dest;
+	
   for ( i = 0; i < count32b; i++, dest += 4 )
   {
     *(__packed uint32_t *)dest = USB_OTG_READ_REG32(fifo);

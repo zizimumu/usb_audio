@@ -166,6 +166,33 @@ int fputc(int ch, FILE *f)
 
 
 
+
+void key_press_Init(void )
+{
+  GPIO_InitTypeDef  GPIO_InitStructure;
+  
+  /* Enable the GPIO_LED Clock */
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+
+
+  /* Configure the GPIO_LED pin */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+}
+
+void delay_mm(u32 delay)
+{
+	while(delay--);
+}
+
+extern  u32 total_size;
+extern u32 last_size;
+extern uint8_t  IsocOutBuff [AUDIO_OUT_PACKET*MAX_PACKET_NUM];
+
 int main(void)
 {
   __IO uint32_t i = 0;
@@ -198,20 +225,41 @@ int main(void)
 //  } 
 
   COM_Init(115200);
+  key_press_Init();
   USART_SendStr("system init done \r\n");
 
   printf("printf OK\r\n");
   /* Main loop */
   while (1)
   {    
-    if (i++ == 0x500000)
-    {
-      STM_EVAL_LEDToggle(LED1);
+  //  if (i++ == 0x500000)
+ //   {
+ //     STM_EVAL_LEDToggle(LED1);
       //STM_EVAL_LEDToggle(LED2);
       //STM_EVAL_LEDToggle(LED3);
       //STM_EVAL_LEDToggle(LED4);
-      i = 0;
-    }
+ //     i = 0;
+//    }
+
+	if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0) == 1){
+		delay_mm(1000000);
+
+		if((GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0) == 1)){
+			printf("key press,total size %d,last size %d\r\n",total_size,last_size);
+			printf("last data:\r\n ");
+			for(i=0;i< last_size;i++){
+				if((i%16) == 0)
+					printf("\r\n");
+
+				printf("    %02x",IsocOutBuff[i]);
+
+			}
+			
+			i = 0;
+		}
+
+
+	}
 
 	
   }

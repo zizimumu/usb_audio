@@ -139,6 +139,7 @@ static void AUDIO_Req_SetCurrent(void *pdev, USB_SETUP_REQ *req);
 static uint8_t  *USBD_audio_GetCfgDesc (uint8_t speed, uint16_t *length);
 
 void cacu_feed_up(void );
+void wait_dma_done(void);
 
 /**
   * @}
@@ -153,8 +154,6 @@ void cacu_feed_up(void );
 // uint8_t  IsocOutBuff [AUDIO_OUT_PACKET*MAX_PACKET_NUM];
 uint8_t  IsocOutBuff [AUDIO_OUT_PACKET*MAX_PACKET_NUM]; // 170 frames,32K
 
-uint8_t* IsocOutWrPtr = IsocOutBuff;
-uint8_t* IsocOutRdPtr = IsocOutBuff;
 
 /* Main Buffer for Audio Control Rrequests transfers and its relative variables */
 uint8_t  AudioCtl[64];
@@ -167,11 +166,18 @@ uint8_t  AudioCtlUnit = 0;
 static __IO uint32_t  usbd_audio_AltSet = 0;
 static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE];
 
+#ifdef TEST_MODE
 
+u16 test_buff[256];
+u32 uart_wr = 0;
+u32 uart_rd = 0;
+#endif
 char feed[16];
 static DMA_InitTypeDef DMA_InitStructure; 
-volatile u8 *wr_buf_pt = IsocOutBuff;
+volatile u32 wr_buf_pt = 0;
 u32 feed_freq;
+u32 feed_state = 0;
+
 
 #define FABS(a,b) ((a)>(b)?((a)-(b)):(b)-(a))
 
@@ -189,48 +195,6 @@ u32 feed_freq;
 uint8_t  usbd_audio_IN_Incplt(void *pdev)
 {
 	
-
-#if 0
-  static u32 cnt = 0;
-
-  USB_OTG_DSTS_TypeDef dsts;  
-  __IO USB_OTG_DEPCTL_TypeDef depctl;
-  USB_OTG_CORE_HANDLE *ppdev = pdev; 
-  dsts.d32 = USB_OTG_READ_REG32(&ppdev->regs.DREGS->DSTS);
-
-
-	
-	depctl.d32	= USB_OTG_READ_REG32(&ppdev->regs.INEP_REGS[AUDIO_FEED_UP_EP & 0x7F]->DIEPCTL);
-	
-	/* Check if this is the first packet */
-	if (((dsts.b.soffn) & 1) == depctl.b.dpid)
-	{	   
-	  /* EP disable */		 
-	  depctl.b.snak = 1;
-	  depctl.b.epdis = 1;
-	  USB_OTG_WRITE_REG32(&ppdev->regs.INEP_REGS[AUDIO_FEED_UP_EP & 0x7F]->DIEPCTL, depctl.d32);
-	  
-	  /*flush endpoint*/
-	  DCD_EP_Flush(ppdev, AUDIO_FEED_UP_EP);
-	  
-	  /*Restart transfer  (EVEN/ODD frame scheduling will be done here when preparing packet) */	  
-	  DCD_EP_Tx (ppdev,
-				 AUDIO_FEED_UP_EP,
-				 feed,
-				 3);
-	}  
-	cnt++;
-	//if((cnt % 1000) == 0)
-	 	 printf("in com\r\n");
-
-
-	 // if(PlayFlag)
-	//	  cacu_feed_up();
-	  cnt++;
-	  if((cnt % 1000) == 0)
-		   printf("in com\r\n");
-#endif
-
 	  return USBD_OK;
 
 }
@@ -267,7 +231,7 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   0x01,                                 /* bConfigurationValue */
   0x00,                                 /* iConfiguration */
   0xC0,                                 /* bmAttributes  BUS Powred*/
-  0x32,                                 /* bMaxPower = 100 mA*/
+  0x32*5,                                 /* bMaxPower = 100 mA*/
   /* 09 byte*/
   
   /* USB Speaker Standard interface descriptor */
@@ -563,19 +527,37 @@ static void AUDIO_Init(u32 audio_sample,u32 frame_bit)
 {
 	I2S_user_Init(audio_sample,frame_bit);
 	Audio_DMA_Init(frame_bit);	
+	wr_buf_pt = 0;
+	feed_state = 0;
+
 }
+
+static void AUDIO_Disable(void)
+{
+	DMA_Cmd(DMA1_Stream4,DISABLE); 
+	I2S_Cmd(SPI2,DISABLE);
+	wr_buf_pt = 0;
+	feed_state = 0;
+
+#ifdef TEST_MODE
+
+	uart_rd = uart_wr = 0;
+#endif
+
+}
+
+
+
 void Audio_Play(u32 Addr, u32 Size)
 {   
-	u32 len;
+
 #define I2S_ENABLE_MASK                 0x0400
 
   	DMA_InitStructure.DMA_Memory0BaseAddr=(uint32_t)Addr;
-  	DMA_InitStructure.DMA_BufferSize=(uint32_t)Size/(16/8);
+  	DMA_InitStructure.DMA_BufferSize=(uint32_t)Size/(AUDIO_FRAME_BITS/8);
   	DMA_Init(DMA1_Stream4,&DMA_InitStructure);
   	DMA_Cmd(DMA1_Stream4,ENABLE); 
 
-	len = DMA_GetCurrDataCounter(DMA1_Stream4);
-	printf("get dma init len 0x%x\r\n",len);
   	if ((SPI2->I2SCFGR & I2S_ENABLE_MASK)==0)I2S_Cmd(SPI2,ENABLE);
 }
 
@@ -611,19 +593,6 @@ static uint8_t  usbd_audio_Init (void  *pdev,
 
 DCD_EP_Flush(pdev, AUDIO_FEED_UP_EP);
 
-
-#if 0
-DCD_EP_Tx (pdev,
-		   AUDIO_FEED_UP_EP,
-		   feed,
-		   3);
-#endif
-
-  /* Initialize the Audio output Hardware layer */
- // if (AUDIO_OUT_fops.Init(USBD_AUDIO_FREQ, DEFAULT_VOLUME, 0) != USBD_OK)
- // {
- //   return USBD_FAIL;
- // }
     
   /* Prepare Out endpoint to receive audio data */
   DCD_EP_PrepareRx(pdev,
@@ -631,8 +600,8 @@ DCD_EP_Tx (pdev,
                    (uint8_t*)IsocOutBuff,                        
                    MAX_RX_SIZE);  
 
-AUDIO_Init(USBD_AUDIO_FREQ,16);
-  wr_buf_pt = IsocOutBuff;
+  AUDIO_Init(USBD_AUDIO_FREQ,AUDIO_FRAME_BITS);
+
 
   
   return USBD_OK;
@@ -676,9 +645,9 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
   uint16_t len=USB_AUDIO_DESC_SIZ;
   uint8_t  *pbuf=usbd_audio_CfgDesc + 18;
   uint8_t dest;
-   USB_OTG_DRXSTS_TypeDef   status;
-   u32 i,max;
-   USB_OTG_CORE_HANDLE *dev = pdev;
+  // USB_OTG_DRXSTS_TypeDef   status;
+//   u32 i,max;
+//   USB_OTG_CORE_HANDLE *dev = pdev;
    
   switch (req->bmRequest & USB_REQ_TYPE_MASK)
   {
@@ -764,15 +733,20 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
         usbd_audio_AltSet = (uint8_t)(req->wValue);
 
 	if(req->wValue == 0){
-		PlayFlag = 0;
 
-		//status.d32 = USB_OTG_READ_REG32( &dev->regs.GREGS->GRXSTSP );
-		
-		printf("total_size = %d\r\n",total_size);
-		//total_size = 0;
+		if(PlayFlag){
+			PlayFlag = 0;
+			wait_dma_done();
+			AUDIO_Disable();
+			printf("audio aplay done,total data %d\r\n",total_size);
+		}
+		else{
 
+		}
 		
-#if 1
+		total_size = 0;
+		
+#if 0
 		max = status.b.bcnt;
 		if(max == 0 || max >= ((340-64)*4))
 			max = last_size;
@@ -837,14 +811,11 @@ static uint8_t  usbd_audio_EP0_RxReady (void  *pdev)
   */
 static uint8_t  usbd_audio_DataIn (void *pdev, uint8_t epnum)
 {
-//	u32 data;
-static u32 cnt = 0;
-u32 data;
 
  #ifdef FEED_UP_ENABLE
   if (epnum == (AUDIO_FEED_UP_EP & 0x7F))
   {
-   // if (((USB_OTG_CORE_HANDLE*)pdev)->dev.device_status == USB_OTG_CONFIGURED )
+
    if(PlayFlag)
     {
 
@@ -854,7 +825,7 @@ u32 data;
       /* Prepare next data to be sent */
       DCD_EP_Tx (pdev,
                  AUDIO_FEED_UP_EP,
-                 feed,
+                 (u8 *)feed,
                  3);    
 
 	//  FEED_FREQ_2_BUFF(feed,47000);
@@ -952,18 +923,42 @@ static uint8_t  usbd_audio_DataOut (void *pdev, uint8_t epnum)
 #define FAST_STATE 2
 #define NORMAL_STATE 0
 
+#define DAM_MIN_GEP 3
+void wait_dma_done(void)
+{
+	u32 dma,remaind_sz;
+	//u8 *r_packet;
+	int pre,next;
+	
+	dma = DMA_GetCurrDataCounter(DMA1_Stream4)*(AUDIO_FRAME_BITS/8);
+	remaind_sz = (sizeof(IsocOutBuff)  - wr_buf_pt)/(AUDIO_FRAME_BITS/8);
 
+	pre = remaind_sz - DAM_MIN_GEP;
+	next = remaind_sz + DAM_MIN_GEP;
+
+	if(pre < 0)
+		pre = 0;
+	if(next > sizeof(IsocOutBuff)/(AUDIO_FRAME_BITS/8) )
+		next = sizeof(IsocOutBuff)/(AUDIO_FRAME_BITS/8);
+
+	while(1){
+		dma = DMA_GetCurrDataCounter(DMA1_Stream4) ;
+		if(dma >= pre && dma <= next)
+			break;
+	}
+}
  void cacu_feed_up(void )
 {
 #if 1
 	u32 free_packet;
-	u8 *r_packet;
+	u32 r_packet;
 	static u32 state = NORMAL_STATE;
 	u32 dma;
-	u32 tmp1,tmp2;
+	//u32 tmp1,tmp2;
+	
 
-	dma = DMA_GetCurrDataCounter(DMA1_Stream4)*2;
-	r_packet = (IsocOutBuff + sizeof(IsocOutBuff) - dma ) ;
+	dma = DMA_GetCurrDataCounter(DMA1_Stream4)*(AUDIO_FRAME_BITS/8);
+	r_packet = (sizeof(IsocOutBuff) - dma ) ;
 
 
 	if(r_packet > wr_buf_pt){
@@ -978,6 +973,13 @@ static uint8_t  usbd_audio_DataOut (void *pdev, uint8_t epnum)
 			printf("data under!!! %d \r\n",dma);
 		}
 	}
+#ifdef TEST_MODE
+
+	test_buff[uart_wr] = (free_packet/(AUDIO_FRAME_BITS/8));
+	uart_wr++;
+	if(uart_wr >= 256)
+		uart_wr = 0;
+#endif
 
 	if(free_packet >= HIGHT_THRD_SIZE){
 		//FEED_FAST_FRE(state,feed_freq);
@@ -988,17 +990,17 @@ static uint8_t  usbd_audio_DataOut (void *pdev, uint8_t epnum)
 		//FEED_SLOW_FRE(state,feed_freq);
 		FEED_FAST_FRE(state,feed_freq);
 	}
-	else if(free_packet > LOW_THRD_SIZE && free_packet <= sizeof(IsocOutBuff) /2){
+	else if(free_packet > LOW_THRD_SIZE && free_packet <= sizeof(IsocOutBuff) /(AUDIO_FRAME_BITS/8)){
 
-		if(state ==FAST_STATE ){
+		if(state ==SLOW_STATE ){
 			feed_freq = USBD_AUDIO_FREQ;
 			state = NORMAL_STATE;
 		}
 
 	}
 	
-	else if(free_packet < HIGHT_THRD_SIZE && free_packet >= sizeof(IsocOutBuff) /2){
-		if(state ==SLOW_STATE ){
+	else if(free_packet < HIGHT_THRD_SIZE && free_packet >= sizeof(IsocOutBuff) /(AUDIO_FRAME_BITS/8)){
+		if(state ==FAST_STATE ){
 			feed_freq = USBD_AUDIO_FREQ;
 			state = NORMAL_STATE;
 		}
@@ -1010,8 +1012,8 @@ static uint8_t  usbd_audio_DataOut (void *pdev, uint8_t epnum)
 }
 static uint8_t  usbd_audio_SOF (void *pdev)
 {     
-	u32 data;
-	static u8 feed_state = 0;
+	//u32 data;
+	
   /* Check if there are available data in stream buffer.
     In this function, a single variable (PlayFlag) is used to avoid software delays.
     The play operation must be executed as soon as possible after the SOF detection. */
@@ -1026,46 +1028,11 @@ static uint8_t  usbd_audio_SOF (void *pdev)
 		/* Prepare data to be sent for the feedback endpoint */
 		DCD_EP_Tx (pdev,
 				   AUDIO_FEED_UP_EP,
-				   feed,
+				   (u8 *)feed,
 				   3);
 
 		feed_state = 1;
 	}
-
-
-  #if 0
-    /* Start playing received packet */
-    AUDIO_OUT_fops.AudioCmd((uint8_t*)(IsocOutRdPtr),  /* Samples buffer pointer */
-                            AUDIO_OUT_PACKET,          /* Number of samples in Bytes */
-                            AUDIO_CMD_PLAY);           /* Command to be processed */
-    
-    /* Increment the Buffer pointer or roll it back when all buffers all full */  
-    if (IsocOutRdPtr >= (IsocOutBuff + (AUDIO_OUT_PACKET * OUT_PACKET_NUM)))
-    {/* Roll back to the start of buffer */
-      IsocOutRdPtr = IsocOutBuff;
-    }
-    else
-    {/* Increment to the next sub-buffer */
-      IsocOutRdPtr += AUDIO_OUT_PACKET;
-    }
-    
-    /* If all available buffers have been consumed, stop playing */
-    if (IsocOutRdPtr == IsocOutWrPtr)
-    {    
-      /* Pause the audio stream */
-      AUDIO_OUT_fops.AudioCmd((uint8_t*)(IsocOutBuff),   /* Samples buffer pointer */
-                              AUDIO_OUT_PACKET,          /* Number of samples in Bytes */
-                              AUDIO_CMD_PAUSE);          /* Command to be processed */
-      
-      /* Stop entering play loop */
-      PlayFlag = 0;
-      
-      /* Reset buffer pointers */
-      IsocOutRdPtr = IsocOutBuff;
-      IsocOutWrPtr = IsocOutBuff;
-    }
-
-	#endif
   }
   
   return USBD_OK;

@@ -174,7 +174,7 @@ extern USBD_Class_cb_TypeDef  AUDIO_cb;
   * @}
   */ 
 #define FEED_FREQ_2_BUFF(buf,freq) ( *(u32 *)buf = ( ( ((u32) freq /1000) << 14) | ((freq %1000) << 4) )  )
-
+#define AUDIO_FRAME_BITS 16
 
 
 

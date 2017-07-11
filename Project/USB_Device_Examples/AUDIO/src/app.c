@@ -193,6 +193,11 @@ extern  u32 total_size;
 extern u32 last_size;
 extern uint8_t  IsocOutBuff [AUDIO_OUT_PACKET*MAX_PACKET_NUM];
 
+extern u16 test_buff[256];
+extern u32 uart_wr;
+extern u32 uart_rd;
+
+
 int main(void)
 {
   __IO uint32_t i = 0;
@@ -214,17 +219,7 @@ int main(void)
             &AUDIO_cb, 
             &USR_cb);
 
-
-  /* Setup SysTick Timer for 10 msec interrupts 
-     This interrupt is used to display the current state of the Audio Player and
-     the output state (Speaker/Headphone) */
- // if (SysTick_Config(SystemCoreClock / 100))
-//  { 
-    /* Capture error */ 
-//    while (1);
-//  } 
-
-  COM_Init(115200);
+  COM_Init(921600);
   key_press_Init();
   USART_SendStr("system init done \r\n");
 
@@ -232,36 +227,20 @@ int main(void)
   /* Main loop */
   while (1)
   {    
-  //  if (i++ == 0x500000)
- //   {
- //     STM_EVAL_LEDToggle(LED1);
-      //STM_EVAL_LEDToggle(LED2);
-      //STM_EVAL_LEDToggle(LED3);
-      //STM_EVAL_LEDToggle(LED4);
- //     i = 0;
-//    }
-
-	if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0) == 1){
-		delay_mm(1000000);
-
-		if((GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0) == 1)){
-			printf("key press,total size %d,last size %d\r\n",total_size,last_size);
-			printf("last data:\r\n ");
-			for(i=0;i< last_size;i++){
-				if((i%16) == 0)
-					printf("\r\n");
-
-				printf("    %02x",IsocOutBuff[i]);
-
-			}
-			
-			i = 0;
+  	if(PlayFlag)
+		if (i++ == 0x500000){
+			  STM_EVAL_LEDToggle(LED1);
+			  i = 0;
 		}
 
-
+#ifdef TEST_MODE
+	if(uart_wr  != uart_rd){
+		printf("%d\r\n",test_buff[uart_rd]);
+		uart_rd++;
+		if(uart_rd >= 256)
+			uart_rd = 0 ;
 	}
-
-	
+#endif
   }
 } 
 

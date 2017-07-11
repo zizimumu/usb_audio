@@ -600,7 +600,7 @@ static uint32_t DCD_HandleSof_ISR(USB_OTG_CORE_HANDLE *pdev)
 * @retval status
 */
 extern u32 total_size ;
-extern u8 *wr_buf_pt ;
+extern u32 wr_buf_pt ;
 extern uint32_t PlayFlag;
 extern uint8_t  IsocOutBuff [AUDIO_OUT_PACKET*MAX_PACKET_NUM];
 extern u32 last_size;
@@ -636,16 +636,16 @@ static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
     {
 
 	#if 1
-	 free = IsocOutBuff + sizeof(IsocOutBuff) - wr_buf_pt;
+	 free = sizeof(IsocOutBuff) - wr_buf_pt;
 	if(free >= status.b.bcnt){
-		USB_OTG_ReadPacket(pdev,wr_buf_pt, status.b.bcnt);
+		USB_OTG_ReadPacket(pdev,IsocOutBuff + wr_buf_pt, status.b.bcnt);
 		wr_buf_pt += status.b.bcnt;
 	}
 	else{
-		USB_OTG_ReadPacket(pdev,wr_buf_pt, free );
+		USB_OTG_ReadPacket(pdev,IsocOutBuff + wr_buf_pt, free );
 		
-		wr_buf_pt = IsocOutBuff;
-		USB_OTG_ReadPacket(pdev,wr_buf_pt, status.b.bcnt - free );
+		wr_buf_pt = 0;
+		USB_OTG_ReadPacket(pdev,IsocOutBuff, status.b.bcnt - free );
 
 		wr_buf_pt += (status.b.bcnt - free);
 	}
@@ -659,7 +659,7 @@ static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
 	total_size += status.b.bcnt;
 	last_size = status.b.bcnt;
 
-	if ((PlayFlag == 0) && (wr_buf_pt >=  (IsocOutBuff + sizeof(IsocOutBuff) / 2) ))
+	if ((PlayFlag == 0) && (wr_buf_pt >=   sizeof(IsocOutBuff) / (AUDIO_FRAME_BITS/8) ))
 	{
 		PlayFlag = 1;
 		Audio_Play((u32)IsocOutBuff,sizeof(IsocOutBuff));

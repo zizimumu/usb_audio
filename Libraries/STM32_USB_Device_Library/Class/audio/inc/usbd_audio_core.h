@@ -53,20 +53,15 @@
 
 /* AudioFreq * DataSize (2 bytes) * NumChannels (Stereo: 2) */
 #define AUDIO_OUT_PACKET                              (uint32_t)(((USBD_AUDIO_FREQ * 2 * 2) /1000)) 
+#define MAX_AUDIO_OUT_PACKET                              (uint32_t)(((USBD_AUDIO_MAX_FREQ * 2 * 2) /1000)) 
+
+
 #define AUDIO_FEED_UP_PACKET 3
 #define MAX_RX_SIZE  0xffff// (sizeof(IsocOutBuff))
 
 
 #define FEED_RATE 3
 #define MAX_PACKET_NUM ((1<<FEED_RATE) * 60)
-// #define MAX_PACKET_NUM (170)
-
-
-/* Number of sub-packets in the audio transfer buffer. You can modify this value but always make sure
-  that it is an even number and higher than 3 */
-#define OUT_PACKET_NUM                                   4
-/* Total size of the audio transfer buffer */
-#define TOTAL_OUT_BUF_SIZE                           ((uint32_t)(AUDIO_OUT_PACKET * OUT_PACKET_NUM))
 
 #ifdef FEED_UP_ENABLE
 #define FEED_UP_EP_DESC_SIZE 9
@@ -74,7 +69,7 @@
 #define FEED_UP_EP_DESC_SIZE 0
 #endif
 
-#define AUDIO_CONFIG_DESC_SIZE                        (109 + 6 + FEED_UP_EP_DESC_SIZE)
+#define AUDIO_CONFIG_DESC_SIZE                        (109 + 3 + FEED_UP_EP_DESC_SIZE)
 #define AUDIO_INTERFACE_DESC_SIZE                     9
 #define USB_AUDIO_DESC_SIZ                            0x09
 #define AUDIO_STANDARD_ENDPOINT_DESC_SIZE             0x09
@@ -176,8 +171,29 @@ extern USBD_Class_cb_TypeDef  AUDIO_cb;
 #define FEED_FREQ_2_BUFF(buf,freq) ( *(u32 *)buf = ( ( ((u32) freq /1000) << 14) | ((freq %1000) << 4) )  )
 #define AUDIO_FRAME_BITS 16
 
+#define LOW_THRD_SIZE (sizeof(IsocOutBuff) /2 - AUDIO_OUT_PACKET*10)
+#define HIGHT_THRD_SIZE (sizeof(IsocOutBuff) /2 + AUDIO_OUT_PACKET*10)
 
 
+#define FEED_MIN_VALUE (USBD_AUDIO_FREQ - USBD_AUDIO_FREQ/8)
+#define FEED_MAX_VALUE (USBD_AUDIO_FREQ + USBD_AUDIO_FREQ/4)
+
+#define FAST_FEED_STEP    20000  // (sizeof(IsocOutBuff)/2 /(USBD_AUDIO_FREQ/4) ) 
+#define SLOW_FEED_STEP  20000 // (sizeof(IsocOutBuff)/2 /(USBD_AUDIO_FREQ/8) ) 
+
+struct AUDIO_DEV_S{
+	u32 wr_buf_pt;
+	u32 feed_freq;
+	u32 feed_state  ;
+	u32 work_freq  ;
+	u32 total_size ;
+	u32 last_size ;
+	u32 PlayFlag ;
+	char feed[16]; 
+};
+
+
+extern struct AUDIO_DEV_S audio_dev;
 
 
 

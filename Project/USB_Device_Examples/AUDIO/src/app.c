@@ -189,13 +189,11 @@ void delay_mm(u32 delay)
 	while(delay--);
 }
 
-extern  u32 total_size;
-extern u32 last_size;
-extern uint8_t  IsocOutBuff [AUDIO_OUT_PACKET*MAX_PACKET_NUM];
 
 extern u16 test_buff[256];
 extern u32 uart_wr;
 extern u32 uart_rd;
+
 
 
 int main(void)
@@ -227,8 +225,8 @@ int main(void)
   /* Main loop */
   while (1)
   {    
-  	if(PlayFlag)
-		if (i++ == 0x500000){
+  	if(audio_dev.PlayFlag)
+		if (i++ == 0x200000){
 			  STM_EVAL_LEDToggle(LED1);
 			  i = 0;
 		}

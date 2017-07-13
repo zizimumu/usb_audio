@@ -599,14 +599,9 @@ static uint32_t DCD_HandleSof_ISR(USB_OTG_CORE_HANDLE *pdev)
 * @param  pdev: device instance
 * @retval status
 */
-extern u32 total_size ;
-extern u32 wr_buf_pt ;
-extern uint32_t PlayFlag;
-extern uint8_t  IsocOutBuff [AUDIO_OUT_PACKET*MAX_PACKET_NUM];
-extern u32 last_size;
-extern u32 feed_freq;
-extern void Audio_Play(u32 Addr, u32 Size);
-extern char feed[16];
+
+extern uint8_t  IsocOutBuff[MAX_AUDIO_OUT_PACKET*MAX_PACKET_NUM];
+void Audio_Play(u32 Addr, u32 Size);
 
 static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
 {
@@ -636,18 +631,18 @@ static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
     {
 
 	#if 1
-	 free = sizeof(IsocOutBuff) - wr_buf_pt;
+	 free = sizeof(IsocOutBuff) - audio_dev.wr_buf_pt;
 	if(free >= status.b.bcnt){
-		USB_OTG_ReadPacket(pdev,IsocOutBuff + wr_buf_pt, status.b.bcnt);
-		wr_buf_pt += status.b.bcnt;
+		USB_OTG_ReadPacket(pdev,IsocOutBuff + audio_dev.wr_buf_pt, status.b.bcnt);
+		audio_dev.wr_buf_pt += status.b.bcnt;
 	}
 	else{
-		USB_OTG_ReadPacket(pdev,IsocOutBuff + wr_buf_pt, free );
+		USB_OTG_ReadPacket(pdev,IsocOutBuff + audio_dev.wr_buf_pt, free );
 		
-		wr_buf_pt = 0;
+		audio_dev.wr_buf_pt = 0;
 		USB_OTG_ReadPacket(pdev,IsocOutBuff, status.b.bcnt - free );
 
-		wr_buf_pt += (status.b.bcnt - free);
+		audio_dev.wr_buf_pt += (status.b.bcnt - free);
 	}
 	#endif
 	//USB_OTG_ReadPacket(pdev,IsocOutBuff, status.b.bcnt);
@@ -656,15 +651,15 @@ static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
 	ep->xfer_buff += status.b.bcnt;
 	ep->xfer_count += status.b.bcnt;
 
-	total_size += status.b.bcnt;
-	last_size = status.b.bcnt;
+	audio_dev.total_size += status.b.bcnt;
+	audio_dev.last_size = status.b.bcnt;
 
-	if ((PlayFlag == 0) && (wr_buf_pt >=   sizeof(IsocOutBuff) / (AUDIO_FRAME_BITS/8) ))
+	if ((audio_dev.PlayFlag == 0) && (audio_dev.wr_buf_pt >=   sizeof(IsocOutBuff) / (AUDIO_FRAME_BITS/8) ))
 	{
-		PlayFlag = 1;
+		audio_dev.PlayFlag = 1;
 		Audio_Play((u32)IsocOutBuff,sizeof(IsocOutBuff));
-		feed_freq = USBD_AUDIO_FREQ;
-		FEED_FREQ_2_BUFF(feed,feed_freq);
+		audio_dev.feed_freq = USBD_AUDIO_FREQ;
+		FEED_FREQ_2_BUFF(audio_dev.feed,audio_dev.feed_freq);
 
 	}
 

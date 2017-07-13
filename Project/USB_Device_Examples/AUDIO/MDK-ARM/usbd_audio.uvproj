@@ -4006,7 +4006,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER,STM32F4XX,USE_STM324xG_EVAL,USE_USB_OTG_FS,FEED_UP_ENABLE,TEST_MODE</Define>
+              <Define>USE_STDPERIPH_DRIVER,STM32F4XX,USE_STM324xG_EVAL,USE_USB_OTG_FS,FEED_UP_ENABLE</Define>
               <Undefine></Undefine>
               <IncludePath>..\;..\inc;..\..\..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\..\..\Libraries\STM32_USB_OTG_Driver\inc;..\..\..\..\Libraries\STM32_USB_Device_Library\Core\inc;..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\inc;..\..\..\..\Utilities\STM32_EVAL;..\..\..\..\Utilities\STM32_EVAL\Common;..\..\..\..\Utilities\STM32_EVAL\STM3240_41_G_EVAL</IncludePath>
             </VariousControls>

@@ -656,7 +656,7 @@ static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
 
 	if ((audio_dev.PlayFlag == 0) && (audio_dev.wr_buf_pt >=   sizeof(IsocOutBuff) / (AUDIO_FRAME_BITS/8) ))
 	{
-		audio_dev.PlayFlag = 1;
+		
 		Audio_Play((u32)IsocOutBuff,sizeof(IsocOutBuff));
 		audio_dev.feed_freq = USBD_AUDIO_FREQ;
 		FEED_FREQ_2_BUFF(audio_dev.feed,audio_dev.feed_freq);

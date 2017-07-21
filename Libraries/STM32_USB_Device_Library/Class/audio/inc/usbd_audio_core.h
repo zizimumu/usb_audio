@@ -178,8 +178,8 @@ extern USBD_Class_cb_TypeDef  AUDIO_cb;
 #define FEED_MIN_VALUE (USBD_AUDIO_FREQ - USBD_AUDIO_FREQ/8)
 #define FEED_MAX_VALUE (USBD_AUDIO_FREQ + USBD_AUDIO_FREQ/4)
 
-#define FAST_FEED_STEP    20000  // (sizeof(IsocOutBuff)/2 /(USBD_AUDIO_FREQ/4) ) 
-#define SLOW_FEED_STEP  20000 // (sizeof(IsocOutBuff)/2 /(USBD_AUDIO_FREQ/8) ) 
+#define FAST_FEED_STEP    60 //20000  // (sizeof(IsocOutBuff)/2 /(USBD_AUDIO_FREQ/4) ) 
+#define SLOW_FEED_STEP  60 //20000 // (sizeof(IsocOutBuff)/2 /(USBD_AUDIO_FREQ/8) ) 
 
 struct AUDIO_DEV_S{
 	u32 wr_buf_pt;

@@ -39,7 +39,7 @@
 /* Audio frequency in Hz */
 #undef USBD_AUDIO_FREQ
 
-#define USBD_AUDIO_FREQ audio_dev.work_freq
+#define USBD_AUDIO_FREQ (audio_dev.work_freq & 0x00ffffff)
 #define USBD_AUDIO_MAX_FREQ 48000
 
 

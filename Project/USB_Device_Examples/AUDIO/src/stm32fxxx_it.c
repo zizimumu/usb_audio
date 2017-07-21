@@ -47,7 +47,7 @@ extern uint32_t USBD_OTG_EP1IN_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
 extern uint32_t USBD_OTG_EP1OUT_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
 #endif
 
-extern AUDIO_FOPS_TypeDef  AUDIO_OUT_fops;
+//extern AUDIO_FOPS_TypeDef  AUDIO_OUT_fops;
 
 uint8_t* USER_INFORMATION1[6] = {
   ">STATE: Application Idle        ",
@@ -165,6 +165,8 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+
+#if 0
   /* Check if the audio player state has changed */
   if (PrevState != AUDIO_OUT_fops.GetState())
   {
@@ -194,6 +196,10 @@ void SysTick_Handler(void)
     }
     LCD_SetTextColor(LCD_LOG_DEFAULT_COLOR); 
   }
+  #endif
+
+  extern u32 ntime;
+  ntime--;
 }
 
 /**

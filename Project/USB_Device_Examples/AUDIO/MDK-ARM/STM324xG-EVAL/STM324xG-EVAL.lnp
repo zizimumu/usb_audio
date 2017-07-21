@@ -6,6 +6,7 @@
 ".\stm324xg-eval\misc.o"
 ".\stm324xg-eval\usbd_desc.o"
 ".\stm324xg-eval\stm324xg_usb_audio_codec.o"
+".\stm324xg-eval\delay.o"
 ".\stm324xg-eval\usb_dcd_int.o"
 ".\stm324xg-eval\usb_core.o"
 ".\stm324xg-eval\usb_dcd.o"

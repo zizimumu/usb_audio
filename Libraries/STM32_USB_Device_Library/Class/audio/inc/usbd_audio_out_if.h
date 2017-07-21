@@ -100,7 +100,7 @@ typedef enum
   * @{
   */ 
 
-extern AUDIO_FOPS_TypeDef  AUDIO_OUT_fops;
+// extern AUDIO_FOPS_TypeDef  AUDIO_OUT_fops;
 
 /**
   * @}

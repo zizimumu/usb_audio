@@ -80,7 +80,7 @@
 
 #include "usbd_audio_core.h"
 #include "usbd_audio_out_if.h"
-
+#include "delay.h"
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @{
   */
@@ -188,6 +188,7 @@ u32 PlayFlag = 0;
 
 
 struct AUDIO_DEV_S audio_dev;
+extern USB_OTG_CORE_HANDLE           USB_OTG_dev;
 
 #define FABS(a,b) ((a)>(b)?((a)-(b)):(b)-(a))
 
@@ -462,9 +463,7 @@ void I2S_user_Init(u32 sample ,u32 frame_bits)
 	        printf("I2S_user_Init: err frame bit frame_bits %d\r\n",frame_bits);
 	        break;
 	};
-	
 
-	
   	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
   	SPI_I2S_DeInit(SPI2);
   	I2S_InitStructure.I2S_Standard = I2S_Standard_MSB;
@@ -477,6 +476,175 @@ void I2S_user_Init(u32 sample ,u32 frame_bits)
 
 	//I2S_Cmd(SPI2,ENABLE);
 }
+
+
+
+
+#define CODEC_DATA_FORTMAT_DSP 3
+#define CODEC_DATA_FORTMAT_I2S 2
+#define CODEC_DATA_FORTMAT_MSB_L 1
+#define CODEC_DATA_FORTMAT_MSB_R 0
+
+#define CODEC_DATA_LENGTH_32 3
+#define CODEC_DATA_LENGTH_24 2
+#define CODEC_DATA_LENGTH_20 1
+#define CODEC_DATA_LENGTH_16 0
+
+#define CODEC_MODEL_SLAVE  0
+#define CODEC_MODEL_MAST 1
+
+
+#define USE_256_FS_SAMPLE
+#ifdef USE_256_FS_SAMPLE 
+#define CODEC_SMAPLE_FMT_48K  0
+#define CODEC_SMAPLE_FMT_96K 0x0f
+#define CODEC_SMAPLE_FMT_44_1K 0x10
+#define CODEC_SMAPLE_FMT_32K 0x0c
+#else // 384 fs
+#define CODEC_SMAPLE_FMT_48K  0x01
+#define CODEC_SMAPLE_FMT_96K 0x0f
+#define CODEC_SMAPLE_FMT_44_1K 0x11
+#define CODEC_SMAPLE_FMT_32K 0x0d
+#endif
+
+void wm_spi_init(void)
+{
+  	GPIO_InitTypeDef GPIO_InitStructure;
+  	SPI_InitTypeDef  SPI_InitStructure;
+
+  	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
+  	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA ,ENABLE);
+
+	// GPIO_PinAFConfig(GPIOA, GPIO_PinSource4, GPIO_AF_SPI1);	// for nss
+  	GPIO_PinAFConfig(GPIOA, GPIO_PinSource5, GPIO_AF_SPI1);
+  	GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_SPI1);
+  	GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_SPI1);
+  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_DOWN;
+  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
+  	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	
+  	SPI_I2S_DeInit(SPI1);
+  	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;//全双工
+  	SPI_InitStructure.SPI_DataSize = SPI_DataSize_16b;//8位数据模式
+  	SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;//空闲模式下SCK为1
+  	SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;//数据采样从第2个时间边沿开始
+  	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;//NSS软件管理
+  	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_64;//波特率
+  	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;//大端模式
+  	SPI_InitStructure.SPI_CRCPolynomial = 7;//CRC多项式
+  	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;//主机模式
+
+	
+  	SPI_Init(SPI1, &SPI_InitStructure);
+	//SPI_SSOutputCmd(SPI1,ENABLE);
+  	SPI_Cmd(SPI1, ENABLE);
+}
+
+
+void wm8731_gpio_init(void)
+{
+  GPIO_InitTypeDef  GPIO_InitStructure;
+  
+  /* Enable the GPIO_LED Clock */
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+
+  /* Configure the GPIO_LED pin */
+  //CSB sclk  SDIN 
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;// | GPIO_Pin_5  | GPIO_Pin_7;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+}
+
+#define CSB_HIGH()		GPIO_SetBits(GPIOA,GPIO_Pin_4)
+#define CSB_LOW()		GPIO_ResetBits(GPIOA,GPIO_Pin_4)
+
+
+u16 SPI1_RW_16bit(u16 byte)
+{
+ 	while((SPI1->SR&SPI_I2S_FLAG_TXE)==RESET);
+ 	SPI1->DR = byte;
+ 	while((SPI1->SR&SPI_I2S_FLAG_RXNE)==RESET);
+ 	return(SPI1->DR);
+}
+
+
+void write_register(u16 addr,u16 value)
+{
+	CSB_LOW();
+	delay_us(1);
+	SPI1_RW_16bit( ((addr<< 9) | (value&0x01ff)) );
+	delay_us(1);
+	CSB_HIGH();
+}
+
+
+void wm_8731_init(u32 sample,u32 frame_bits )
+{
+    u16 date_len = 0;
+    u16 samp_fmt= 0;
+
+    switch(frame_bits){
+        case 32 :
+            date_len = CODEC_DATA_LENGTH_32;
+            break;
+        case 24 :
+            date_len = CODEC_DATA_LENGTH_24;
+            break;
+        case 16 :
+            date_len = CODEC_DATA_LENGTH_16;
+            break;
+
+         default :
+            printf("err frame bit frame_bits\r\n",frame_bits);
+            break;
+    };
+    switch(sample){
+        case 96000 :
+            samp_fmt = CODEC_SMAPLE_FMT_96K;
+            break;
+        case 48000 :
+            samp_fmt = CODEC_SMAPLE_FMT_48K;
+            break;
+        case 32000 :
+            samp_fmt = CODEC_SMAPLE_FMT_32K;
+            break;
+	case 44100 :
+		samp_fmt = CODEC_SMAPLE_FMT_44_1K;
+		break;
+
+         default :
+	    samp_fmt = CODEC_SMAPLE_FMT_48K;
+            printf("sample err %d,set to 48K\r\n",sample);
+            break;
+    };    
+	wm_spi_init();
+	wm8731_gpio_init();
+	
+	write_register(0x0f,0x00);		//reset all
+
+	delay_ms(1);
+	write_register(0x09,0x00);		//inactive
+	delay_ms(1);
+	
+	write_register(0x02,0x6a);		//Left Headphone Out: set left line out volume,the max is 0x7f
+	write_register(3, 0x6a);  	// Right Headphone Out: set right line out volume,,the max is 0x7f
+	write_register(4, 0x15); 		 // Analogue Audio Path Control: set mic as input and boost it, and enable dac 
+	write_register(5, 0x00);  	// ADC ,DAC Digital Audio Path Control: disable soft mute   
+	write_register(6, 0);  			// power down control: power on all 
+	write_register(7, CODEC_DATA_FORTMAT_MSB_L | (date_len <<2) );  	// 0x01:MSB,left,iwl=16-bits, Enable slave Mode;0x09 : MSB,left,24bit
+	
+	write_register(8, samp_fmt << 1);  	// Normal, Base OVer-Sampleing Rate 384 fs (BOSR=1) 
+	
+	write_register(9, 0x01);  	// active interface
+}
+
+
 void Audio_DMA_Init(u32 frame_bit)  
 { 
   	NVIC_InitTypeDef NVIC_InitStructure;
@@ -527,6 +695,8 @@ void Audio_DMA_Init(u32 frame_bit)
 //note : the i2s control need more times to be inited
 static void AUDIO_Init(u32 audio_sample,u32 frame_bit)
 {
+	audio_sample &= 0x00ffffff;
+	wm_8731_init(audio_sample,frame_bit);
 	I2S_user_Init(audio_sample,frame_bit);
 	Audio_DMA_Init(frame_bit);	
 	audio_dev.wr_buf_pt = 0;
@@ -540,6 +710,7 @@ static void AUDIO_Disable(USB_OTG_CORE_HANDLE *pdev)
 	I2S_Cmd(SPI2,DISABLE);
 	audio_dev.wr_buf_pt = 0;
 	audio_dev.feed_state = 0;
+	audio_dev.PlayFlag = 0;
 
 #ifdef TEST_MODE
 
@@ -552,6 +723,7 @@ static void AUDIO_Disable(USB_OTG_CORE_HANDLE *pdev)
 	                   (uint8_t*)IsocOutBuff,                        
 	                   MAX_RX_SIZE);  
 
+	
 }
 
 
@@ -563,7 +735,7 @@ void Audio_Play(u32 Addr, u32 Size)
 
 
 
-	
+	audio_dev.PlayFlag = 1;
   	DMA_InitStructure.DMA_Memory0BaseAddr=(uint32_t)Addr;
   	DMA_InitStructure.DMA_BufferSize=(uint32_t)Size/(AUDIO_FRAME_BITS/8);
   	DMA_Init(DMA1_Stream4,&DMA_InitStructure);
@@ -616,6 +788,7 @@ DCD_EP_Flush(pdev, AUDIO_FEED_UP_EP);
   //work_freq = work_freq & 0x00ffffff;
   //AUDIO_Init(work_freq,AUDIO_FRAME_BITS);
 
+  
 
   
   return USBD_OK;
@@ -636,9 +809,9 @@ static uint8_t  usbd_audio_DeInit (void  *pdev,
   DCD_EP_Close(pdev,AUDIO_FEED_UP_EP);
 
   /* DeInitialize the Audio output Hardware layer */
-  if (AUDIO_OUT_fops.DeInit(0) != USBD_OK)
+  //if (AUDIO_OUT_fops.DeInit(0) != USBD_OK)
   {
-    return USBD_FAIL;
+   // return USBD_FAIL;
   }
   
   return USBD_OK;
@@ -697,6 +870,7 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
 				printf("freq set to %d\r\n",audio_dev.work_freq);
 			}
 			else if(req->bRequest==AUDIO_REQ_SET_CUR){
+				//AudioCtlCmd = SAMPLING_FREQ_CONTROL;
 				USBD_CtlPrepareRx(pdev,(u8 *)&audio_dev.work_freq,3);
 			}
 		}
@@ -756,7 +930,7 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
 	if(req->wValue == 0){
 
 		if(audio_dev.PlayFlag){
-			audio_dev.PlayFlag = 0;
+			//audio_dev.PlayFlag = 0;
 			wait_dma_done();
 			AUDIO_Disable(pdev);
 			printf("audio aplay done,total data %d\r\n",audio_dev.total_size);
@@ -794,7 +968,7 @@ static uint8_t  usbd_audio_EP0_RxReady (void  *pdev)
     if (AudioCtlUnit == AUDIO_OUT_STREAMING_CTRL)
     {/* In this driver, to simplify code, only one unit is manage */
       /* Call the audio interface mute function */
-      AUDIO_OUT_fops.MuteCtl(AudioCtl[0]);
+      //AUDIO_OUT_fops.MuteCtl(AudioCtl[0]);
       
       /* Reset the AudioCtlCmd variable to prevent re-entering this function */
       AudioCtlCmd = 0;
@@ -951,13 +1125,17 @@ void wait_dma_done(void)
 	if(r_packet > audio_dev.wr_buf_pt){
 		free_packet = sizeof(IsocOutBuff) - (r_packet - audio_dev.wr_buf_pt);
 		if(free_packet <= AUDIO_OUT_PACKET){
-			printf("data over!!! %d\r\n",dma);
+			printf("data over!!! %d--%d\r\n",dma,audio_dev.wr_buf_pt);
+
+			AUDIO_Disable(&USB_OTG_dev);
 		}
 	}
 	else{
 		free_packet = audio_dev.wr_buf_pt - r_packet;
 		if(free_packet <= AUDIO_OUT_PACKET){
-			printf("data under!!! %d \r\n",dma);
+			printf("data under!!! %d--%d\r\n",dma,audio_dev.wr_buf_pt);
+
+			AUDIO_Disable(&USB_OTG_dev);
 		}
 	}
 #ifdef TEST_MODE

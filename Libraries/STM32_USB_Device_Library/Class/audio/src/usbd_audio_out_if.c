@@ -66,6 +66,9 @@
 /** @defgroup usbd_audio_out_if_Private_FunctionPrototypes
   * @{
   */
+
+
+#if 0
 static uint8_t  Init         (uint32_t  AudioFreq, uint32_t Volume, uint32_t options);
 static uint8_t  DeInit       (uint32_t options);
 static uint8_t  AudioCmd     (uint8_t* pbuf, uint32_t size, uint8_t cmd);
@@ -81,6 +84,8 @@ static uint8_t  GetState     (void);
 /** @defgroup usbd_audio_out_if_Private_Variables
   * @{
   */ 
+
+#if 0
 AUDIO_FOPS_TypeDef  AUDIO_OUT_fops = 
 {
   Init,
@@ -91,7 +96,7 @@ AUDIO_FOPS_TypeDef  AUDIO_OUT_fops =
   PeriodicTC,
   GetState
 };
-
+#endif
 static uint8_t AudioState = AUDIO_STATE_INACTIVE;
 
 /**
@@ -305,6 +310,10 @@ static uint8_t  GetState   (void)
 {
   return AudioState;
 }
+
+
+
+#endif
 
 /**
   * @}

@@ -390,7 +390,51 @@ void I2S_Init(SPI_TypeDef* SPIx, I2S_InitTypeDef* I2S_InitStruct)
     {
       RCC->CFGR &= ~(uint32_t)RCC_CFGR_I2SSRC;
     }    
-    
+
+
+
+    //just for mclk enable when pllm_cvo === 1Mhz
+    switch(I2S_InitStruct->I2S_AudioFreq){
+        case 48000 :
+            plln = 258;
+            pllr = 3;
+            break;
+        case 44100 :
+            plln = 271;
+            pllr = 2;            
+            break;
+        case 32000:
+            plln = 213;
+            pllr = 2;             
+            break;
+
+        default :
+            plln = 258;
+            pllr = 3;
+
+            break;
+
+    };
+        RCC->CR &= ~((uint32_t)RCC_CR_PLLI2SON);
+      RCC->CR &= ((uint32_t)RCC_CR_PLLI2SON);
+      /* PLLI2S clock used as I2S clock source */
+      RCC->CFGR &= ~RCC_CFGR_I2SSRC;
+
+      /* Configure PLLI2S */
+      RCC->PLLI2SCFGR = (plln << 6) | (pllr << 28);
+
+      /* Enable PLLI2S */
+      RCC->CR |= ((uint32_t)RCC_CR_PLLI2SON);
+
+      /* Wait till PLLI2S is ready */
+      while((RCC->CR & RCC_CR_PLLI2SRDY) == 0)
+      {
+      }
+
+
+
+
+	
     /* Get the PLLI2SN value */
     plln = (uint32_t)(((RCC->PLLI2SCFGR & RCC_PLLI2SCFGR_PLLI2SN) >> 6) & \
                       (RCC_PLLI2SCFGR_PLLI2SN >> 6));

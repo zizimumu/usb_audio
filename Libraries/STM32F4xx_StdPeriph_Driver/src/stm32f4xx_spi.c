@@ -157,7 +157,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_spi.h"
 #include "stm32f4xx_rcc.h"
-
+#include <stdio.h>
 /** @addtogroup STM32F4xx_StdPeriph_Driver
   * @{
   */
@@ -482,6 +482,11 @@ void I2S_Init(SPI_TypeDef* SPIx, I2S_InitTypeDef* I2S_InitStruct)
     i2sdiv = 2;
     i2sodd = 0;
   }
+
+
+  printf("I2S config div = %d,odd =%d ,actal clock is %d\r\n",i2sdiv,i2sodd>>8,i2sclk/( (2*i2sdiv +( i2sodd>>8))*256))  ;
+  printf("plln = %d ,pllr =%d,pllm=%d\r\n",plln,pllr,pllm);
+  
 
   /* Write to SPIx I2SPR register the computed value */
   SPIx->I2SPR = (uint16_t)((uint16_t)i2sdiv | (uint16_t)(i2sodd | (uint16_t)I2S_InitStruct->I2S_MCLKOutput));

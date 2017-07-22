@@ -206,7 +206,7 @@ int main(void)
   To reconfigure the default setting of SystemInit() function, refer to
   system_stm32fxxx.c file
   */  
- audio_dev.work_freq = 48000;
+ //audio_dev.work_freq = 48000;
   
   USBD_Init(&USB_OTG_dev,
 #ifdef USE_USB_OTG_HS 

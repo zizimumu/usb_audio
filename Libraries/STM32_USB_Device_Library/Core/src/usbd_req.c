@@ -244,8 +244,8 @@ USBD_Status  USBD_StdEPReq (USB_OTG_CORE_HANDLE  *pdev, USB_SETUP_REQ  *req)
   ep_addr  = LOBYTE(req->wIndex);   
 
 
-	if((req->bmRequest & 0x60) == 0x20)
-		printf("audio class to ep requst %d\r\n",req->bRequest);
+//	if((req->bmRequest & 0x60) == 0x20)
+//		printf("audio class to ep requst %d\r\n",req->bRequest);
   if( (req->bmRequest & 0x60) == 0x20 &&  \
   	(req->bRequest == AUDIO_REQ_SET_CUR || req->bRequest == AUDIO_REQ_GET_CUR)){
 	pdev->dev.class_cb->Setup (pdev, req); 

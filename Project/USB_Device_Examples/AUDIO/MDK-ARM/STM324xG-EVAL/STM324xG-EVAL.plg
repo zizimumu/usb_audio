@@ -3,84 +3,52 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-E:\STM32_USB-Host-Device_Lib_V2.1.0\STM32_USB-Host-Device_Lib_V2.1.0\Project\USB_Device_Examples\AUDIO\MDK-ARM\usbd_audio.uvproj
-Project File Date:  07/14/2017
+C:\Users\emy\Desktop\STM32_USB-Host-Device_Lib_V2.1.0\STM32_USB-Host-Device_Lib_V2.1.0\Project\USB_Device_Examples\AUDIO\MDK-ARM\usbd_audio.uvproj
+Project File Date:  07/21/2017
 
 <h2>Output:</h2>
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
 Erase Done.
 Programming Done.
 Verify OK.
 Build target 'STM324xG-EVAL_USBD-FS'
-compiling app.c...
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(604): warning:  #225-D: the format string ends before this argument
+compiling stm32f4xx_spi.c...
+..\..\..\..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c(487): warning:  #223-D: function "printf" declared implicitly
 linking...
-Program Size: Code=17820 RO-data=788 RW-data=488 ZI-data=95592  
+Program Size: Code=17944 RO-data=788 RW-data=480 ZI-data=95088  
 FromELF: creating hex file...
 ".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 1 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Build target 'STM324xG-EVAL_USBD-FS'
+compiling stm32f4xx_spi.c...
+linking...
+Program Size: Code=17944 RO-data=788 RW-data=480 ZI-data=95088  
+FromELF: creating hex file...
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 0 Warning(s).
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
 Erase Done.
 Programming Done.
 Verify OK.
 Build target 'STM324xG-EVAL_USBD-FS'
 compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(604): warning:  #225-D: the format string ends before this argument
 linking...
-Program Size: Code=17836 RO-data=788 RW-data=488 ZI-data=95592  
+Program Size: Code=17944 RO-data=788 RW-data=480 ZI-data=95088  
 FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 1 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 0 Warning(s).
 Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(190): error:  #147: declaration is incompatible with "struct AUDIO_DEV_S audio_dev" (declared at line 196 of "..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\inc\usbd_audio_core.h")
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(604): warning:  #225-D: the format string ends before this argument
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 1 Errors, 1 Warning(s).
-Target not created
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(604): warning:  #225-D: the format string ends before this argument
 linking...
-Program Size: Code=17836 RO-data=788 RW-data=488 ZI-data=95592  
+Program Size: Code=17944 RO-data=788 RW-data=480 ZI-data=95088  
 FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 1 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'STM324xG-EVAL_USBD-FS'
-compiling app.c...
-compiling stm32fxxx_it.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usb_bsp.c...
-compiling usbd_usr.c...
-..\..\..\..\Utilities\STM32_EVAL\Common\lcd_log.h(136): warning:  #64-D: declaration does not declare anything
-compiling usbd_desc.c...
-compiling usb_dcd_int.c...
-..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c(612): warning:  #177-D: variable "data" was declared but never referenced
-compiling usbd_audio_out_if.c...
-compiling usbd_audio_core.c...
-..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c(604): warning:  #225-D: the format string ends before this argument
-compiling usbd_req.c...
-compiling usbd_core.c...
-compiling usbd_ioreq.c...
-linking...
-Program Size: Code=17924 RO-data=788 RW-data=488 ZI-data=95592  
-FromELF: creating hex file...
-".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 4 Warning(s).
-Load "E:\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
+".\STM324xG-EVAL\STM324xG-EVAL.axf" - 0 Errors, 0 Warning(s).
+Load "C:\\Users\\emy\\Desktop\\STM32_USB-Host-Device_Lib_V2.1.0\\STM32_USB-Host-Device_Lib_V2.1.0\\Project\\USB_Device_Examples\\AUDIO\\MDK-ARM\\STM324xG-EVAL\\STM324xG-EVAL.axf" 
 Erase Done.
 Programming Done.
 Verify OK.

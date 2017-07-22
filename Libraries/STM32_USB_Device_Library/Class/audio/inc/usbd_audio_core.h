@@ -98,6 +98,7 @@
 #define AUDIO_STREAMING_INTERFACE_DESC_SIZE           0x07
 
 #define AUDIO_CONTROL_MUTE                            0x0001
+#define AUDIO_CONTROL_VOL                            0x0002
 
 #define AUDIO_FORMAT_TYPE_I                           0x01
 #define AUDIO_FORMAT_TYPE_III                         0x03
@@ -189,6 +190,8 @@ struct AUDIO_DEV_S{
 	u32 total_size ;
 	u32 last_size ;
 	u32 PlayFlag ;
+	u32 host_cmd;
+	u32 volume;
 	char feed[16]; 
 };
 

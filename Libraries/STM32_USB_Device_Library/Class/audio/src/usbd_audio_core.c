@@ -283,7 +283,7 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   AUDIO_OUT_STREAMING_CTRL,             /* bUnitID */
   0x01,                                 /* bSourceID */
   0x01,                                 /* bControlSize */
-  AUDIO_CONTROL_MUTE,                   /* bmaControls(0) */
+  AUDIO_CONTROL_MUTE|AUDIO_CONTROL_VOL,                   /* bmaControls(0) */
   0x00,                                 /* bmaControls(1) */
   0x00,                                 /* iTerminal */
   /* 09 byte*/
@@ -601,7 +601,7 @@ void wm_8731_init(u32 sample,u32 frame_bits )
             break;
 
          default :
-            printf("err frame bit frame_bits\r\n",frame_bits);
+            printf("err frame bit frame_bits\r\n");
             break;
     };
     switch(sample){
@@ -632,8 +632,8 @@ void wm_8731_init(u32 sample,u32 frame_bits )
 	write_register(0x09,0x00);		//inactive
 	delay_ms(1);
 	
-	write_register(0x02,0x6a);		//Left Headphone Out: set left line out volume,the max is 0x7f
-	write_register(3, 0x6a);  	// Right Headphone Out: set right line out volume,,the max is 0x7f
+	write_register(0x02,0x75);		//Left Headphone Out: set left line out volume,the max is 0x7f
+	write_register(3, 0x75);  	// Right Headphone Out: set right line out volume,,the max is 0x7f
 	write_register(4, 0x15); 		 // Analogue Audio Path Control: set mic as input and boost it, and enable dac 
 	write_register(5, 0x00);  	// ADC ,DAC Digital Audio Path Control: disable soft mute   
 	write_register(6, 0);  			// power down control: power on all 
@@ -825,6 +825,45 @@ static uint8_t  usbd_audio_DeInit (void  *pdev,
   * @retval status
   */
 
+void usb_set_sample(USB_SETUP_REQ *req,USB_OTG_CORE_HANDLE  *pdev)
+{
+	if( (req->wValue >> 8) == SAMPLING_FREQ_CONTROL){
+		debug_log("%s sample freq\r\n",(req->bRequest==AUDIO_REQ_GET_CUR?"get":"set"));
+		if(req->bRequest==AUDIO_REQ_GET_CUR){
+			audio_dev.work_freq = audio_dev.work_freq & 0x00ffffff;
+			USBD_CtlSendData(pdev,(u8 *)&audio_dev.work_freq,3);
+		
+			printf("freq set to %d\r\n",audio_dev.work_freq);
+		}
+		else if(req->bRequest==AUDIO_REQ_SET_CUR){
+			audio_dev.host_cmd = HOST_CMD_SET_SAMPLE;
+			USBD_CtlPrepareRx(pdev,(u8 *)&audio_dev.work_freq,3);
+		}
+		else{
+			USBD_CtlError (pdev, req);
+		}
+	}
+	else
+		USBD_CtlError (pdev, req);
+
+}
+void usb_set_vol(USB_SETUP_REQ *req,USB_OTG_CORE_HANDLE  *pdev)
+{
+	
+
+	if(req->bRequest==AUDIO_REQ_SET_CUR && (req->wValue>>8) == VOLUME_CONTROL){
+		//debug_log("setting vol to \r\n");
+		
+		audio_dev.host_cmd = HOST_CMD_SET_VOLUME;
+		USBD_CtlPrepareRx(pdev,(u8 *)&audio_dev.volume,2);
+	}
+	else{
+		USBD_CtlError (pdev, req);
+	}
+
+}
+
+
 static uint8_t  usbd_audio_Setup (void  *pdev, 
                                   USB_SETUP_REQ *req)
 {
@@ -839,7 +878,7 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
   {
     /* AUDIO Class Requests -------------------------------*/
   case USB_REQ_TYPE_CLASS :    
-	debug_log("audio class request type %x : %x ,Value %d\r\n",req->bmRequest,req->bRequest,req->wValue);
+	debug_log("audio class request type %x : %x ,Value 0x%x\r\n",req->bmRequest,req->bRequest,req->wValue);
 	
     switch (req->bRequest)
     {
@@ -861,27 +900,11 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
     switch (dest)
     {
     case USB_REQ_RECIPIENT_ENDPOINT:
-		if( (req->wValue >> 8) == SAMPLING_FREQ_CONTROL){
-			debug_log("%s sample freq\r\n",(req->bRequest==AUDIO_REQ_GET_CUR?"get":"set"));
-			if(req->bRequest==AUDIO_REQ_GET_CUR){
-				audio_dev.work_freq = audio_dev.work_freq & 0x00ffffff;
-				USBD_CtlSendData(pdev,(u8 *)&audio_dev.work_freq,3);
-
-				printf("freq set to %d\r\n",audio_dev.work_freq);
-			}
-			else if(req->bRequest==AUDIO_REQ_SET_CUR){
-				//AudioCtlCmd = SAMPLING_FREQ_CONTROL;
-				USBD_CtlPrepareRx(pdev,(u8 *)&audio_dev.work_freq,3);
-			}
-		}
-		else{
-			USBD_CtlError (pdev, req);
-		}
-
+	usb_set_sample(req,pdev);
       break;
       	
     case USB_REQ_RECIPIENT_INTERFACE:
-
+	usb_set_vol(req,pdev);
       break;
     case USB_REQ_RECIPIENT_DEVICE:
 
@@ -938,8 +961,8 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
 		audio_dev.total_size = 0;
 	}
 	else{
-		audio_dev.work_freq = audio_dev.work_freq & 0x00ffffff;
-		AUDIO_Init(audio_dev.work_freq,AUDIO_FRAME_BITS);
+		//audio_dev.work_freq = audio_dev.work_freq & 0x00ffffff;
+		//AUDIO_Init(audio_dev.work_freq,AUDIO_FRAME_BITS);
 	}
       }
       else
@@ -975,6 +998,20 @@ static uint8_t  usbd_audio_EP0_RxReady (void  *pdev)
       AudioCtlLen = 0;
     }
   } 
+
+  if(audio_dev.host_cmd == HOST_CMD_SET_SAMPLE){
+	audio_dev.host_cmd = 0;
+	audio_dev.work_freq = audio_dev.work_freq & 0x00ffffff;
+
+	printf("host set sample %d\r\n",audio_dev.work_freq);
+	AUDIO_Init(audio_dev.work_freq,AUDIO_FRAME_BITS);
+  }
+  else if(audio_dev.host_cmd == HOST_CMD_SET_VOLUME){
+	audio_dev.host_cmd = 0;
+	audio_dev.volume = audio_dev.volume & 0x0000ffff;
+
+	printf("host set volume 0x%x\r\n",audio_dev.volume);	
+  }
   
   return USBD_OK;
 }

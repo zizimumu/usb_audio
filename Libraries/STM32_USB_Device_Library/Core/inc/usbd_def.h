@@ -102,9 +102,12 @@
 #define USB_FEATURE_REMOTE_WAKEUP                          1
 #define USB_FEATURE_TEST_MODE                              2
 
-
+#define VOLUME_CONTROL 0x02
 #define SAMPLING_FREQ_CONTROL  1
 #define PITCH_CONTROL 2
+
+#define HOST_CMD_SET_SAMPLE 1
+#define HOST_CMD_SET_VOLUME 2
 
 /**
   * @}

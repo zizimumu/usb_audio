@@ -424,7 +424,7 @@ void I2S_GPIO_Init(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource12, GPIO_AF_SPI2);  
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource13, GPIO_AF_SPI2);
@@ -435,7 +435,7 @@ void I2S_GPIO_Init(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);	 
 	GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_SPI2); 
 
@@ -583,7 +583,7 @@ void write_register(u16 addr,u16 value)
 	CSB_HIGH();
 }
 
-
+#define DEFUALT_VOLUME 0x75
 void wm_8731_init(u32 sample,u32 frame_bits )
 {
     u16 date_len = 0;
@@ -632,8 +632,9 @@ void wm_8731_init(u32 sample,u32 frame_bits )
 	write_register(0x09,0x00);		//inactive
 	delay_ms(1);
 	
-	write_register(0x02,0x75);		//Left Headphone Out: set left line out volume,the max is 0x7f
-	write_register(3, 0x75);  	// Right Headphone Out: set right line out volume,,the max is 0x7f
+	write_register(0x02,0);		//Left Headphone Out: set left line out volume,the max is 0x7f
+	write_register(3, 0);  	// Right Headphone Out: set right line out volume,,the max is 0x7f
+	
 	write_register(4, 0x15); 		 // Analogue Audio Path Control: set mic as input and boost it, and enable dac 
 	write_register(5, 0x00);  	// ADC ,DAC Digital Audio Path Control: disable soft mute   
 	write_register(6, 0);  			// power down control: power on all 
@@ -645,6 +646,21 @@ void wm_8731_init(u32 sample,u32 frame_bits )
 }
 
 
+void wm8731_disable(void)
+{
+	write_register(0x02,0);		//Left Headphone Out: set left line out volume,the max is 0x7f
+	write_register(3, 0);  	// Right Headphone Out: set right line out volume,,the max is 0x7f
+
+    write_register(0x0f,0x00);		//reset all
+    write_register(0x09,0x00);		//inactive
+}
+
+void vm8731_vol_open(void)
+{
+	write_register(0x02,DEFUALT_VOLUME);		//Left Headphone Out: set left line out volume,the max is 0x7f
+	write_register(3, DEFUALT_VOLUME);  	// Right Headphone Out: set right line out volume,,the max is 0x7f
+
+}
 void Audio_DMA_Init(u32 frame_bit)  
 { 
   	NVIC_InitTypeDef NVIC_InitStructure;
@@ -696,9 +712,11 @@ void Audio_DMA_Init(u32 frame_bit)
 static void AUDIO_Init(u32 audio_sample,u32 frame_bit)
 {
 	audio_sample &= 0x00ffffff;
-	wm_8731_init(audio_sample,frame_bit);
+	
 	I2S_user_Init(audio_sample,frame_bit);
 	Audio_DMA_Init(frame_bit);	
+    wm_8731_init(audio_sample,frame_bit);
+    
 	audio_dev.wr_buf_pt = 0;
 	audio_dev.feed_state = 0;
 
@@ -708,9 +726,12 @@ static void AUDIO_Disable(USB_OTG_CORE_HANDLE *pdev)
 {
 	DMA_Cmd(DMA1_Stream4,DISABLE); 
 	I2S_Cmd(SPI2,DISABLE);
+    wm8731_disable();
 	audio_dev.wr_buf_pt = 0;
 	audio_dev.feed_state = 0;
 	audio_dev.PlayFlag = 0;
+
+audio_dev.open = 0;
 
 #ifdef TEST_MODE
 
@@ -736,12 +757,17 @@ void Audio_Play(u32 Addr, u32 Size)
 
 
 	audio_dev.PlayFlag = 1;
+
+		
+
   	DMA_InitStructure.DMA_Memory0BaseAddr=(uint32_t)Addr;
   	DMA_InitStructure.DMA_BufferSize=(uint32_t)Size/(AUDIO_FRAME_BITS/8);
   	DMA_Init(DMA1_Stream4,&DMA_InitStructure);
   	DMA_Cmd(DMA1_Stream4,ENABLE); 
 
   	if ((SPI2->I2SCFGR & I2S_ENABLE_MASK)==0)I2S_Cmd(SPI2,ENABLE);
+
+    //vm8731_vol_open();
 
 	
 }
@@ -1025,7 +1051,7 @@ static uint8_t  usbd_audio_EP0_RxReady (void  *pdev)
   */
 static uint8_t  usbd_audio_DataIn (void *pdev, uint8_t epnum)
 {
-
+static u32 count  = 0;
  #ifdef FEED_UP_ENABLE
   if (epnum == (AUDIO_FEED_UP_EP & 0x7F))
   {
@@ -1044,6 +1070,16 @@ static uint8_t  usbd_audio_DataIn (void *pdev, uint8_t epnum)
 
 	//  FEED_FREQ_2_BUFF(feed,47000);
 	cacu_feed_up();
+
+	if(audio_dev.open == 0){
+		if(count >= 125){
+			vm8731_vol_open();
+			count = 0;
+			audio_dev.open = 1;
+		}
+		else
+			count++;
+	}
     }
 
   }

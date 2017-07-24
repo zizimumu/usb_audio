@@ -192,6 +192,7 @@ struct AUDIO_DEV_S{
 	u32 PlayFlag ;
 	u32 host_cmd;
 	u32 volume;
+	u32 open;
 	char feed[16]; 
 };
 

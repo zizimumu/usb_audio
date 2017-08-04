@@ -36,6 +36,7 @@
 
 
 
+#define AUDIO_IN_ENABLED 1
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @{
@@ -69,7 +70,7 @@
 #define FEED_UP_EP_DESC_SIZE 0
 #endif
 
-#define AUDIO_CONFIG_DESC_SIZE                        (109 + 3 + FEED_UP_EP_DESC_SIZE)
+#define AUDIO_CONFIG_DESC_SIZE                        (109 + 3 + FEED_UP_EP_DESC_SIZE+83 * AUDIO_IN_ENABLED)
 #define AUDIO_INTERFACE_DESC_SIZE                     9
 #define USB_AUDIO_DESC_SIZ                            0x09
 #define AUDIO_STANDARD_ENDPOINT_DESC_SIZE             0x09
@@ -190,6 +191,7 @@ struct AUDIO_DEV_S{
 	u32 total_size ;
 	u32 last_size ;
 	u32 PlayFlag ;
+	u32 recordFlag;
 	u32 host_cmd;
 	u32 volume;
 	u32 open;
@@ -199,6 +201,7 @@ struct AUDIO_DEV_S{
 
 extern struct AUDIO_DEV_S audio_dev;
 
+#define FABS(a,b) ((a)>(b)?((a)-(b)):((b)-(a)))
 
 
 

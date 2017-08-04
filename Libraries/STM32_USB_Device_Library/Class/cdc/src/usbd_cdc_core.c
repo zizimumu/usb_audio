@@ -579,7 +579,7 @@ static uint8_t  usbd_cdc_Setup (void  *pdev,
       break;
       
     case USB_REQ_SET_INTERFACE :
-      if ((uint8_t)(req->wValue) < USBD_ITF_MAX_NUM)
+      if ((uint8_t)(req->wValue) < AUDIO_TOTAL_IF_NUM)
       {
         usbd_cdc_AltSet = (uint8_t)(req->wValue);
       }

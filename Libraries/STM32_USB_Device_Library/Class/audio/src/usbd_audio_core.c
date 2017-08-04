@@ -190,7 +190,7 @@ u32 PlayFlag = 0;
 struct AUDIO_DEV_S audio_dev;
 extern USB_OTG_CORE_HANDLE           USB_OTG_dev;
 
-#define FABS(a,b) ((a)>(b)?((a)-(b)):(b)-(a))
+
 
 
 
@@ -222,6 +222,11 @@ USBD_Class_cb_TypeDef  AUDIO_cb =
 #endif    
 };
 
+
+#define MIC_IN_TERMINAL_ID                            5
+#define MIC_FU_ID                                     6
+#define MIC_OUT_TERMINAL_ID                           7
+
 /* USB AUDIO device Configuration Descriptor */
 static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
 {
@@ -230,7 +235,12 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   USB_CONFIGURATION_DESCRIPTOR_TYPE,    /* bDescriptorType */
   LOBYTE(AUDIO_CONFIG_DESC_SIZE),       /* wTotalLength  109 bytes*/
   HIBYTE(AUDIO_CONFIG_DESC_SIZE),      
-  0x02,                                 /* bNumInterfaces */
+#if (AUDIO_IN_ENABLED == 0)
+  0x02,								  /* bNumInterfaces */
+#else
+  0x03,								  /* bNumInterfaces */
+#endif
+
   0x01,                                 /* bConfigurationValue */
   0x00,                                 /* iConfiguration */
   0xC0,                                 /* bmAttributes  BUS Powred*/
@@ -250,15 +260,30 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   /* 09 byte*/
   
   /* USB Speaker Class-specific AC Interface Descriptor */
+#if (AUDIO_IN_ENABLED == 0)
   AUDIO_INTERFACE_DESC_SIZE,            /* bLength */
+#else
+  0x0A,
+#endif
   AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
   AUDIO_CONTROL_HEADER,                 /* bDescriptorSubtype */
   0x00,          /* 1.00 */             /* bcdADC */
   0x01,
+#if (AUDIO_IN_ENABLED == 0)  
   0x27,                                 /* wTotalLength = 39*/
+#else
+  0x27+31,
+#endif
   0x00,
-  0x01,                                 /* bInCollection */
-  0x01,                                 /* baInterfaceNr */
+#if (AUDIO_IN_ENABLED == 0)
+  0x01, 								/* bInCollection */
+  0x01, 								/* baInterfaceNr */
+#else
+  0x02, 								/* bInCollection */
+  0x01, 								/* baInterfaceNr */
+  0x02, 								/* baInterfaceNr */
+#endif 
+
   /* 09 byte*/
   
   /* USB Speaker Input Terminal Descriptor */
@@ -283,7 +308,7 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   AUDIO_OUT_STREAMING_CTRL,             /* bUnitID */
   0x01,                                 /* bSourceID */
   0x01,                                 /* bControlSize */
-  AUDIO_CONTROL_MUTE|AUDIO_CONTROL_VOL,                   /* bmaControls(0) */
+  AUDIO_CONTROL_MUTE, //|AUDIO_CONTROL_VOL,                   /* bmaControls(0) */
   0x00,                                 /* bmaControls(1) */
   0x00,                                 /* iTerminal */
   /* 09 byte*/
@@ -299,7 +324,53 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   0x02,                                 /* bSourceID */
   0x00,                                 /* iTerminal */
   /* 09 byte*/
-  
+
+
+
+#if (AUDIO_IN_ENABLED == 1)    
+	/* USB Microphone Input Terminal Descriptor */
+	AUDIO_INPUT_TERMINAL_DESC_SIZE, 	  /* bLength */
+	AUDIO_INTERFACE_DESCRIPTOR_TYPE,	  /* bDescriptorType */
+	AUDIO_CONTROL_INPUT_TERMINAL,		  /* bDescriptorSubtype */
+	MIC_IN_TERMINAL_ID, 				  /* bTerminal ID */
+	0x01,								  /* wTerminalType Generic Microphone	0x0201 */
+	0x02,
+	0x00,								  /* bAssocTerminal */
+	0x01,								  /* bNrChannels */
+	0x00,								  /* wChannelConfig 0x0000	Mono */
+	0x00,
+	0x00,								  /* iChannelNames */
+	0x00,								  /* iTerminal */
+	/* 12 byte*/
+
+	/* USB Microphone Audio Feature Unit Descriptor */
+	0x09,								  /* bLength */
+	AUDIO_INTERFACE_DESCRIPTOR_TYPE,	  /* bDescriptorType */
+	AUDIO_CONTROL_FEATURE_UNIT, 		  /* bDescriptorSubtype */
+	MIC_FU_ID,							  /* bUnitID */
+	MIC_IN_TERMINAL_ID, 				  /* bSourceID */
+	0x01,								  /* bControlSize */
+	AUDIO_CONTROL_MUTE, 				  /* bmaControls(0) */
+	0x00,								  /* bmaControls(1) */
+	0x00,								  /* iTerminal */
+	/* 09 byte*/
+
+	/*USB Microphone Output Terminal Descriptor */
+	0x09,								  /* bLength */
+	AUDIO_INTERFACE_DESCRIPTOR_TYPE,	  /* bDescriptorType */
+	AUDIO_CONTROL_OUTPUT_TERMINAL,		  /* bDescriptorSubtype */
+	MIC_OUT_TERMINAL_ID,				  /* bTerminalID */
+	0x01,								  /* wTerminalType USB STREAMING 0x0101*/
+	0x01,								  
+	0x00,								  /* bAssocTerminal */ 
+	MIC_FU_ID,							  /* bSourceID */
+	0x00,								  /* iTerminal */
+	/* 09 byte*/
+#endif /* AUDIO_IN_ENABLED   */
+
+
+
+
   /* USB Speaker Standard AS Interface Descriptor - Audio Streaming Zero Bandwith */
   /* Interface 1, Alternate Setting 0                                             */
   AUDIO_INTERFACE_DESC_SIZE,  /* bLength */
@@ -403,6 +474,85 @@ static uint8_t usbd_audio_CfgDesc[AUDIO_CONFIG_DESC_SIZE] =
   0x00,                               /* bSynchAddress */
   /* 09 byte*/
 #endif
+
+
+
+#if (AUDIO_IN_ENABLED == 1) 
+  /*----------------------------------------- 
+                         USB Microphone Audio Streaming Interface 
+                                             -------------------------------------------------*/
+  /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Zero Bandwith */
+  /* Interface 2, Alternate Setting 0                                             */
+  AUDIO_INTERFACE_DESC_SIZE,            /* bLength */
+  USB_INTERFACE_DESCRIPTOR_TYPE,        /* bDescriptorType */
+  0x02,                                 /* bInterfaceNumber */
+  0x00,                                 /* bAlternateSetting */
+  0x00,                                 /* bNumEndpoints */
+  USB_DEVICE_CLASS_AUDIO,               /* bInterfaceClass */
+  AUDIO_SUBCLASS_AUDIOSTREAMING,        /* bInterfaceSubClass */
+  AUDIO_PROTOCOL_UNDEFINED,             /* bInterfaceProtocol */
+  0x00,                                 /* iInterface */
+  /* 09 byte*/
+  
+  /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Operational */
+  /* Interface 2, Alternate Setting 1                                           */
+  AUDIO_INTERFACE_DESC_SIZE,            /* bLength */
+  USB_INTERFACE_DESCRIPTOR_TYPE,        /* bDescriptorType */
+  0x02,                                 /* bInterfaceNumber */
+  0x01,                                 /* bAlternateSetting */
+  0x01,                                 /* bNumEndpoints */
+  USB_DEVICE_CLASS_AUDIO,               /* bInterfaceClass */
+  AUDIO_SUBCLASS_AUDIOSTREAMING,        /* bInterfaceSubClass */
+  AUDIO_PROTOCOL_UNDEFINED,             /* bInterfaceProtocol */
+  0x00,                                 /* iInterface */
+  /* 09 byte*/
+  
+  /* USB Microphone Audio Streaming Class-Specific Interface Descriptor */
+  AUDIO_STREAMING_INTERFACE_DESC_SIZE,  /* bLength */
+  AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
+  AUDIO_STREAMING_GENERAL,              /* bDescriptorSubtype */
+  MIC_OUT_TERMINAL_ID,                  /* bTerminalLink */
+  0x01,                                 /* bDelay */
+  0x01,                                 /* wFormatTag AUDIO_FORMAT_PCM  0x0001*/
+  0x00,
+  /* 07 byte*/
+  
+  /* USB Speaker Audio Type I Format Interface Descriptor */
+  (0x08 + (3 /** SUPPORTED_FREQ_NBR*/)),    /* bLength */
+  AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
+  AUDIO_STREAMING_FORMAT_TYPE,          /* bDescriptorSubtype */
+  AUDIO_FORMAT_TYPE_I,                  /* bFormatType */   
+  0x02,                                 /* bNrChannels */
+  0x02,                                 /* bSubFrameSize: 2 bytes */
+  16,            /* bBitResolution (effective bits per sample) */ 
+  1, //SUPPORTED_FREQ_NBR,                   /* bSamFreqType number of supported frequencies */ 
+  SAMPLE_FREQ(48000),   /* Audio sampling frequency coded on 3 bytes */
+  /* 8 + 3*N byte*/
+  
+  /* USB Microphone Streaming Standard Endpoint Descriptor */
+  AUDIO_STANDARD_ENDPOINT_DESC_SIZE,    /* bLength */
+  USB_ENDPOINT_DESCRIPTOR_TYPE,         /* bDescriptorType */
+  AUDIO_IN_EP,                          /* bEndpointAddress 1 In endpoint*/
+  USB_ENDPOINT_TYPE_ISOCHRONOUS, //USB_ENDPOINT_TYPE_ISOCHRONOUS,                                 /* bmAttributes: Isochrnous | Asynchronous */ 
+  (u8)(USB_OTG_MAX_TX_SIZE & 0xff),(u8)((USB_OTG_MAX_TX_SIZE>>8)&0xff),
+
+  0x01,                                 /* bInterval must be 1*/
+  0x00,                                 /* bRefresh must be 0 */
+  0x00,                                 /* bSynchAddress */
+  /* 09 byte*/
+  
+  /* Endpoint - Audio Streaming Descriptor*/
+  AUDIO_STREAMING_ENDPOINT_DESC_SIZE,   /* bLength */
+  AUDIO_ENDPOINT_DESCRIPTOR_TYPE,       /* bDescriptorType */
+  AUDIO_ENDPOINT_GENERAL,               /* bDescriptor */
+  0x00,                                 /* bmAttributes: None */
+  0x00,                                 /* bLockDelayUnits */
+  0x00,                                 /* wLockDelay */
+  0x00,
+  /* 07 byte*/    
+  
+#endif /* AUDIO_IN_ENABLED */  
+
 } ;
 
 /**
@@ -478,6 +628,27 @@ void I2S_user_Init(u32 sample ,u32 frame_bits)
 }
 
 
+void I2S_RXConfig(uint32_t Freq)
+{
+	I2S_InitTypeDef I2S_InitStructure;
+
+	I2S_GPIO_Init();
+	
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
+	/* Deinitialize SPI2 peripheral */
+	SPI_I2S_DeInit(SPI2);
+
+	/* I2S2 peripheral configuration */
+	I2S_InitStructure.I2S_Mode = I2S_Mode_MasterRx;
+	I2S_InitStructure.I2S_Standard = I2S_Standard_MSB;
+	I2S_InitStructure.I2S_DataFormat = I2S_DataFormat_16b;
+	I2S_InitStructure.I2S_CPOL = I2S_CPOL_Low;
+	I2S_InitStructure.I2S_AudioFreq = Freq;
+	I2S_InitStructure.I2S_MCLKOutput = I2S_MCLKOutput_Enable;
+	I2S_Init(SPI2, &I2S_InitStructure);
+
+
+}
 
 
 #define CODEC_DATA_FORTMAT_DSP 3
@@ -645,6 +816,66 @@ void wm_8731_init(u32 sample,u32 frame_bits )
 	write_register(9, 0x01);  	// active interface
 }
 
+void wm_8731_record_init(u32 sample,u32 frame_bits )
+{
+    u16 date_len = 0;
+    u16 samp_fmt= 0;
+
+    switch(frame_bits){
+        case 32 :
+            date_len = CODEC_DATA_LENGTH_32;
+            break;
+        case 24 :
+            date_len = CODEC_DATA_LENGTH_24;
+            break;
+        case 16 :
+            date_len = CODEC_DATA_LENGTH_16;
+            break;
+
+         default :
+            printf("err frame bit frame_bits\r\n");
+            break;
+    };
+    switch(sample){
+        case 96000 :
+            samp_fmt = CODEC_SMAPLE_FMT_96K;
+            break;
+        case 48000 :
+            samp_fmt = CODEC_SMAPLE_FMT_48K;
+            break;
+        case 32000 :
+            samp_fmt = CODEC_SMAPLE_FMT_32K;
+            break;
+	case 44100 :
+		samp_fmt = CODEC_SMAPLE_FMT_44_1K;
+		break;
+
+         default :
+	    samp_fmt = CODEC_SMAPLE_FMT_48K;
+            printf("sample err %d,set to 48K\r\n",sample);
+            break;
+    };    
+	wm_spi_init();
+	wm8731_gpio_init();
+	
+	write_register(0x0f,0x00);		//reset all
+
+	delay_ms(1);
+	write_register(0x09,0x00);		//inactive
+	delay_ms(1);
+	
+	write_register(0x00,0x18);//left line in vol,max is 0x1f,0x13 is 0db
+	write_register(0x01, 0x18);  	//right line in vol
+	
+	//write_register(4, 0x15); 		 // Analogue Audio Path Control: set mic as input and boost it, and enable dac 
+	//write_register(5, 0x00);  	// ADC ,DAC Digital Audio Path Control: disable soft mute   
+	write_register(6, 0);  			// power down control: power on all 
+	write_register(7, CODEC_DATA_FORTMAT_MSB_L | (date_len <<2) );  	// 0x01:MSB,left,iwl=16-bits, Enable slave Mode;0x09 : MSB,left,24bit
+	
+	write_register(8, samp_fmt << 1);  	// Normal, Base OVer-Sampleing Rate 384 fs (BOSR=1) 
+	
+	write_register(9, 0x01);  	// active interface
+}
 
 void wm8731_disable(void)
 {
@@ -708,6 +939,55 @@ void Audio_DMA_Init(u32 frame_bit)
   	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Tx, ENABLE);
 }
 
+
+void I2S_DMAConfig_Rx(u32 buff_size,u32 buff_addr)
+{
+	NVIC_InitTypeDef  NVIC_InitStructure;
+
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
+
+	DMA_Cmd(DMA1_Stream3, DISABLE);
+	while(DMA_GetCmdStatus(DMA1_Stream3) != DISABLE);
+
+	DMA_DeInit(DMA1_Stream3);
+
+	DMA_InitStructure.DMA_Channel = DMA_Channel_0;
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&(SPI2->DR);
+	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)buff_addr; //接收数据的内存的地址
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+	DMA_InitStructure.DMA_BufferSize = buff_size/2; //单位为上面的DataSize
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;
+	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
+	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+
+	/* Initiate DMA */
+	DMA_Init(DMA1_Stream3, &DMA_InitStructure);
+	//SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx, ENABLE);
+
+}
+
+void record_init()
+{
+	wm_8731_record_init(48000,16);
+	I2S_RXConfig(48000);
+	I2S_DMAConfig_Rx(100*192,(u32)IsocOutBuff);
+}
+void record_Start(void)
+{
+	DMA_Cmd(DMA1_Stream3, ENABLE);
+
+	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx, ENABLE);
+	I2S_Cmd(SPI2, ENABLE);
+}
+
+
 //note : the i2s control need more times to be inited
 static void AUDIO_Init(u32 audio_sample,u32 frame_bit)
 {
@@ -747,6 +1027,10 @@ audio_dev.open = 0;
 	
 }
 
+void record_init()
+{
+
+}
 
 
 void Audio_Play(u32 Addr, u32 Size)
@@ -767,7 +1051,7 @@ void Audio_Play(u32 Addr, u32 Size)
 
   	if ((SPI2->I2SCFGR & I2S_ENABLE_MASK)==0)I2S_Cmd(SPI2,ENABLE);
 
-    //vm8731_vol_open();
+    vm8731_vol_open();
 
 	
 }
@@ -783,9 +1067,11 @@ void Audio_Play(u32 Addr, u32 Size)
 * @retval status
 */
 //u8 feed[16];
+u8 test_recData[192];
 static uint8_t  usbd_audio_Init (void  *pdev, 
                                  uint8_t cfgidx)
 {  
+	u32 i;
 //u32 data = 0;
   /* Open EP OUT */
   DCD_EP_Open(pdev,
@@ -796,7 +1082,7 @@ static uint8_t  usbd_audio_Init (void  *pdev,
   DCD_EP_Flush(pdev, AUDIO_OUT_EP);
 
 
-  /* Open EP OUT */
+  /* Open EP feedup */
   DCD_EP_Open(pdev,
               AUDIO_FEED_UP_EP,
               AUDIO_FEED_UP_PACKET,
@@ -804,7 +1090,16 @@ static uint8_t  usbd_audio_Init (void  *pdev,
 
 DCD_EP_Flush(pdev, AUDIO_FEED_UP_EP);
 
-    
+
+	/* Open EP IN */
+DCD_EP_Open(pdev,
+			AUDIO_IN_EP,
+			USB_OTG_MAX_TX_SIZE,
+			USB_OTG_EP_ISOC);
+
+  
+  DCD_EP_Flush(pdev, AUDIO_IN_EP);
+
   /* Prepare Out endpoint to receive audio data */
   DCD_EP_PrepareRx(pdev,
                    AUDIO_OUT_EP,
@@ -814,7 +1109,8 @@ DCD_EP_Flush(pdev, AUDIO_FEED_UP_EP);
   //work_freq = work_freq & 0x00ffffff;
   //AUDIO_Init(work_freq,AUDIO_FRAME_BITS);
 
-  
+  for(i=0;i<192;i++)
+  	test_recData[i] = i;
 
   
   return USBD_OK;
@@ -930,7 +1226,7 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
       break;
       	
     case USB_REQ_RECIPIENT_INTERFACE:
-	usb_set_vol(req,pdev);
+	//usb_set_vol(req,pdev);
       break;
     case USB_REQ_RECIPIENT_DEVICE:
 
@@ -947,7 +1243,7 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
     /* Standard Requests -------------------------------*/
   case USB_REQ_TYPE_STANDARD:
 
-	debug_log("audio Standard request type %x : %x ,Value %d\r\n",req->bmRequest,req->bRequest,req->wValue);
+	debug_log("audio Standard request type %x : %x ,Value %d,index %d\r\n",req->bmRequest,req->bRequest,req->wValue,req->wIndex);
     switch (req->bRequest)
     {
     case USB_REQ_GET_DESCRIPTOR: 
@@ -976,7 +1272,7 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
       if ((uint8_t)(req->wValue) < AUDIO_TOTAL_IF_NUM)
       {
         usbd_audio_AltSet = (uint8_t)(req->wValue);
-	if(req->wValue == 0){
+	if(req->wIndex == 1 && req->wValue == 0){
 
 		if(audio_dev.PlayFlag){
 			//audio_dev.PlayFlag = 0;
@@ -986,9 +1282,17 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
 		}
 		audio_dev.total_size = 0;
 	}
-	else{
+	else if(req->wIndex == 1 && req->wValue == 1){
 		//audio_dev.work_freq = audio_dev.work_freq & 0x00ffffff;
 		//AUDIO_Init(audio_dev.work_freq,AUDIO_FRAME_BITS);
+		audio_dev.recordFlag = 0;
+		printf("set IF to play\r\n");
+	}
+	else if(req->wIndex == 2 && req->wValue == 1){
+		audio_dev.recordFlag = 1;
+
+		record_init();
+		printf("set IF to recored\r\n");
 	}
       }
       else
@@ -1072,7 +1376,7 @@ static u32 count  = 0;
 	cacu_feed_up();
 
 	if(audio_dev.open == 0){
-		if(count >= 125){
+		if(count >= 60){
 			vm8731_vol_open();
 			count = 0;
 			audio_dev.open = 1;
@@ -1085,6 +1389,21 @@ static u32 count  = 0;
   }
 
 #endif
+if (epnum == (AUDIO_IN_EP & 0x7F)){
+	DCD_EP_Flush(pdev, AUDIO_IN_EP);
+	
+	/* Prepare next data to be sent */
+	DCD_EP_Tx (pdev,
+			   AUDIO_IN_EP,
+			   (u8 *)test_recData,
+			   192);	
+
+	count++;
+	if(count % 1000 == 0)
+		printf("IN ..\r\n");
+
+}
+
   return USBD_OK;
 }
 
@@ -1271,6 +1590,19 @@ static uint8_t  usbd_audio_SOF (void *pdev)
 
 		audio_dev.feed_state = 1;
 	}
+  }
+
+  if(audio_dev.recordFlag){
+
+	  DCD_EP_Flush(pdev, AUDIO_IN_EP);
+	  DCD_EP_Tx (pdev,
+				 AUDIO_IN_EP,
+				 (u8 *)test_recData,
+				 192);	 
+
+	  audio_dev.recordFlag = 0;
+	  printf("sof trigle\r\n");
+	  
   }
   
   return USBD_OK;

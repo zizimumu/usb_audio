@@ -1075,8 +1075,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>599</TopLine>
-      <CurrentLine>612</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>1</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\..\Libraries\STM32_USB_OTG_Driver\src\usb_dcd_int.c</PathWithFileName>
       <FilenameWithoutPath>usb_dcd_int.c</FilenameWithoutPath>
@@ -1145,10 +1145,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>23</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>581</TopLine>
-      <CurrentLine>592</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>1</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\..\Libraries\STM32_USB_Device_Library\Class\audio\src\usbd_audio_core.c</PathWithFileName>
       <FilenameWithoutPath>usbd_audio_core.c</FilenameWithoutPath>

@@ -608,8 +608,8 @@ static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
   USB_OTG_GINTMSK_TypeDef  int_mask;
   USB_OTG_DRXSTS_TypeDef   status;
   USB_OTG_EP *ep;
-  u32 free;
-  u32 data;
+  u32 free,free_packet;
+  u32 data,dma,r_packet;
   
   /* Disable the Rx Status Queue Level interrupt */
   int_mask.d32 = 0;
@@ -630,7 +630,19 @@ static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
     if (status.b.bcnt &&( (status.b.epnum & 0x7f) ==  (AUDIO_OUT_EP & 0x7f))) //&& ((status.b.epnum &0x7f) == (AUDIO_FEED_UP_EP & 0x7f)))
     {
 
-	#if 1
+#ifndef FEED_UP_ENABLE
+		 dma = DMA_GetCurrDataCounter(DMA1_Stream4)*(AUDIO_FRAME_BITS/8);
+		 r_packet = (sizeof(IsocOutBuff) - dma ) ;
+	 
+	 
+		 if(r_packet > audio_dev.wr_buf_pt){
+			 free_packet = sizeof(IsocOutBuff) - (r_packet - audio_dev.wr_buf_pt);
+		 }
+		 else{
+			 free_packet = audio_dev.wr_buf_pt - r_packet;
+		 }
+#endif
+
 	 free = sizeof(IsocOutBuff) - audio_dev.wr_buf_pt;
 	if(free >= status.b.bcnt){
 		USB_OTG_ReadPacket(pdev,IsocOutBuff + audio_dev.wr_buf_pt, status.b.bcnt);
@@ -644,7 +656,19 @@ static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
 
 		audio_dev.wr_buf_pt += (status.b.bcnt - free);
 	}
-	#endif
+
+	
+#ifndef FEED_UP_ENABLE
+	if(free_packet < status.b.bcnt){
+		audio_dev.wr_buf_pt -=(status.b.bcnt - free_packet);
+		if((int)audio_dev.wr_buf_pt < 0)
+			audio_dev.wr_buf_pt = sizeof(IsocOutBuff)+ ((int )audio_dev.wr_buf_pt);
+	}
+#endif
+
+
+	
+
 	//USB_OTG_ReadPacket(pdev,IsocOutBuff, status.b.bcnt);
 
 	

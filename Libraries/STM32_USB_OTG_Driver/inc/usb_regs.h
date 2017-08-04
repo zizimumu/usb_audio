@@ -70,6 +70,7 @@
 #define USB_OTG_FS_MAX_PACKET_SIZE           64
 #define USB_OTG_MAX_EP0_SIZE                 64
 #define USB_OTG_MAX_RX_SIZE                 256
+#define USB_OTG_MAX_TX_SIZE                 256
 
 /**
   * @}

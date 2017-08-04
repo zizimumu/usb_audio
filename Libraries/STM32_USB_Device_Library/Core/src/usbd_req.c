@@ -205,7 +205,7 @@ USBD_Status  USBD_StdItfReq (USB_OTG_CORE_HANDLE  *pdev, USB_SETUP_REQ  *req)
   {
   case USB_OTG_CONFIGURED:
     
-    if (LOBYTE(req->wIndex) <= USBD_ITF_MAX_NUM) 
+    if (LOBYTE(req->wIndex) < AUDIO_TOTAL_IF_NUM) 
     {
       debug_log("configured -> ");
       pdev->dev.class_cb->Setup (pdev, req); 

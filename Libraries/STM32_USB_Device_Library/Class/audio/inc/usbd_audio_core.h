@@ -185,6 +185,7 @@ extern USBD_Class_cb_TypeDef  AUDIO_cb;
 
 struct AUDIO_DEV_S{
 	u32 wr_buf_pt;
+	u32 rd_buf_pt;
 	u32 feed_freq;
 	u32 feed_state  ;
 	u32 work_freq  ;
@@ -195,6 +196,7 @@ struct AUDIO_DEV_S{
 	u32 host_cmd;
 	u32 volume;
 	u32 open;
+	u32 recd_pt;
 	char feed[16]; 
 };
 
@@ -202,6 +204,7 @@ struct AUDIO_DEV_S{
 extern struct AUDIO_DEV_S audio_dev;
 
 #define FABS(a,b) ((a)>(b)?((a)-(b)):((b)-(a)))
+#define RX_BUFF_SIZE (100*192)
 
 
 

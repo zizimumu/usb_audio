@@ -634,7 +634,6 @@ static uint32_t DCD_HandleRxStatusQueueLevel_ISR(USB_OTG_CORE_HANDLE *pdev)
 		 dma = DMA_GetCurrDataCounter(DMA1_Stream4)*(AUDIO_FRAME_BITS/8);
 		 r_packet = (sizeof(IsocOutBuff) - dma ) ;
 	 
-	 
 		 if(r_packet > audio_dev.wr_buf_pt){
 			 free_packet = sizeof(IsocOutBuff) - (r_packet - audio_dev.wr_buf_pt);
 		 }

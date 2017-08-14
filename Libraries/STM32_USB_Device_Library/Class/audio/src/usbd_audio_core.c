@@ -81,6 +81,8 @@
 #include "usbd_audio_core.h"
 #include "usbd_audio_out_if.h"
 #include "delay.h"
+#include <stdio.h>
+#include <string.h>
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @{
   */
@@ -159,7 +161,7 @@ uint8_t  AudioCtl[64];
 uint8_t  AudioCtlCmd = 0;
 uint32_t AudioCtlLen = 0;
 uint8_t  AudioCtlUnit = 0;
-
+static u32 g_sof_Cnt = 0;
 
 
 static __IO uint32_t  usbd_audio_AltSet = 0;
@@ -857,7 +859,8 @@ void wm_8731_record_init(u32 sample,u32 frame_bits )
     };    
 	wm_spi_init();
 	wm8731_gpio_init();
-	
+
+
 	write_register(0x0f,0x00);		//reset all
 
 	delay_ms(1);
@@ -875,6 +878,8 @@ void wm_8731_record_init(u32 sample,u32 frame_bits )
 	write_register(8, samp_fmt << 1);  	// Normal, Base OVer-Sampleing Rate 384 fs (BOSR=1) 
 	
 	write_register(9, 0x01);  	// active interface
+
+
 }
 
 void wm8731_disable(void)
@@ -942,7 +947,7 @@ void Audio_DMA_Init(u32 frame_bit)
 
 void I2S_DMAConfig_Rx(u32 buff_size,u32 buff_addr)
 {
-	NVIC_InitTypeDef  NVIC_InitStructure;
+	//NVIC_InitTypeDef  NVIC_InitStructure;
 
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
 
@@ -973,11 +978,12 @@ void I2S_DMAConfig_Rx(u32 buff_size,u32 buff_addr)
 
 }
 
-void record_init()
+
+void record_init(void)
 {
 	wm_8731_record_init(48000,16);
 	I2S_RXConfig(48000);
-	I2S_DMAConfig_Rx(100*192,(u32)IsocOutBuff);
+	I2S_DMAConfig_Rx(RX_BUFF_SIZE,(u32)IsocOutBuff);
 }
 void record_Start(void)
 {
@@ -985,7 +991,18 @@ void record_Start(void)
 
 	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx, ENABLE);
 	I2S_Cmd(SPI2, ENABLE);
+
+	audio_dev.recd_pt = 0;
 }
+
+void record_Stop(void)
+{
+	DMA_Cmd(DMA1_Stream3, DISABLE);
+
+	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx, DISABLE);
+	I2S_Cmd(SPI2, DISABLE);
+}
+
 
 
 //note : the i2s control need more times to be inited
@@ -1027,12 +1044,6 @@ audio_dev.open = 0;
 	
 }
 
-void record_init()
-{
-
-}
-
-
 void Audio_Play(u32 Addr, u32 Size)
 {   
 
@@ -1067,7 +1078,7 @@ void Audio_Play(u32 Addr, u32 Size)
 * @retval status
 */
 //u8 feed[16];
-u8 test_recData[192];
+u8 test_recData[256];
 static uint8_t  usbd_audio_Init (void  *pdev, 
                                  uint8_t cfgidx)
 {  
@@ -1292,7 +1303,12 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
 		audio_dev.recordFlag = 1;
 
 		record_init();
+		record_Start();
 		printf("set IF to recored\r\n");
+	}
+	else if(req->wIndex == 2 && req->wValue == 0){
+		record_Stop();
+		printf("record stop\r\n");
 	}
       }
       else
@@ -1346,6 +1362,17 @@ static uint8_t  usbd_audio_EP0_RxReady (void  *pdev)
   return USBD_OK;
 }
 
+
+void mem_cpy_s(u8 *dest, u8 *src,u32 sz)
+{
+	while(sz--){
+		*dest = *src;
+		dest++;
+		src++;
+	}
+		
+}
+
 /**
   * @brief  usbd_audio_DataIn
   *         Handles the audio IN data stage.
@@ -1355,7 +1382,9 @@ static uint8_t  usbd_audio_EP0_RxReady (void  *pdev)
   */
 static uint8_t  usbd_audio_DataIn (void *pdev, uint8_t epnum)
 {
-static u32 count  = 0;
+	static u32 count  = 0;
+	u32 wr,sz,wr_sz,cur = 0,free;
+	static u32 pre = 0;
  #ifdef FEED_UP_ENABLE
   if (epnum == (AUDIO_FEED_UP_EP & 0x7F))
   {
@@ -1390,17 +1419,119 @@ static u32 count  = 0;
 
 #endif
 if (epnum == (AUDIO_IN_EP & 0x7F)){
+
+#if 0
+	cur = DMA_GetCurrDataCounter(DMA1_Stream3)*2;
+
+	sz = pre - cur;
+	if((int)sz <0){
+		sz = RX_BUFF_SIZE - cur + pre;
+	}
+	if(sz > 192*3){
+		pre = cur - 192*3;
+		if((int)pre < 0 )
+			pre = 0;
+	}
+
+	pre = cur;
+
 	DCD_EP_Flush(pdev, AUDIO_IN_EP);
-	
-	/* Prepare next data to be sent */
 	DCD_EP_Tx (pdev,
 			   AUDIO_IN_EP,
 			   (u8 *)test_recData,
-			   192);	
+			   sz); 
 
+
+#elif 0
 	count++;
-	if(count % 1000 == 0)
-		printf("IN ..\r\n");
+	if(count % 1000 ==0)
+		printf("in \r\n");
+
+	cur = DMA_GetCurrDataCounter(DMA1_Stream3)*2;
+
+	sz = pre - cur;
+	if((int)sz <0){
+		sz = RX_BUFF_SIZE - cur + pre;
+
+	}
+	
+	if(sz > 192*5 || sz == 0)
+		printf("over %d\r\n",sz);
+
+	if(sz >=USB_OTG_MAX_TX_SIZE )
+		sz = 256;
+
+	pre = cur;
+	
+	DCD_EP_Flush(pdev, AUDIO_IN_EP);
+	DCD_EP_Tx (pdev,
+			   AUDIO_IN_EP,
+			   (u8 *)test_recData,
+			   sz); 
+#else
+	count++;
+	if(count % 1000 ==0)
+		printf("in \r\n");
+
+	wr = RX_BUFF_SIZE - DMA_GetCurrDataCounter(DMA1_Stream3)*2;
+
+	if(wr >= RX_BUFF_SIZE)
+		wr = 0;
+
+	if(audio_dev.recd_pt > wr){
+		sz = RX_BUFF_SIZE - audio_dev.recd_pt + wr;
+	}
+	else if(wr > audio_dev.recd_pt){
+		sz = wr - audio_dev.recd_pt;
+	}
+	else
+		sz = 0;
+
+
+	if(sz > USB_OTG_MAX_TX_SIZE || sz == 0){
+		printf("over %d,%d:%d,%d:%d\r\n",sz,wr,audio_dev.recd_pt,pre,g_sof_Cnt);
+	}
+
+	pre = g_sof_Cnt;
+
+	if(sz >= 192*5){
+		audio_dev.recd_pt = wr - 192;
+		if((int)audio_dev.recd_pt < 0 )
+			audio_dev.recd_pt = 0;
+
+		sz = wr - audio_dev.recd_pt;
+
+	}
+
+
+	if(sz > USB_OTG_MAX_TX_SIZE){
+		sz = USB_OTG_MAX_TX_SIZE;
+	}
+
+
+	free = RX_BUFF_SIZE - audio_dev.recd_pt;
+	if( sz <= free){
+		mem_cpy_s(test_recData,IsocOutBuff+audio_dev.recd_pt,sz);
+		audio_dev.recd_pt += sz;
+		if(audio_dev.recd_pt >= RX_BUFF_SIZE)
+			audio_dev.recd_pt = 0;
+	}
+	else{
+		mem_cpy_s(test_recData,IsocOutBuff+audio_dev.recd_pt,free);
+		mem_cpy_s(test_recData+free,IsocOutBuff,sz - free);
+
+		audio_dev.recd_pt = sz - free;
+	}
+		
+
+	DCD_EP_Flush(pdev, AUDIO_IN_EP);
+	DCD_EP_Tx (pdev,
+			   AUDIO_IN_EP,
+			   (u8 *)test_recData,
+			   sz); 
+
+#endif
+
 
 }
 
@@ -1601,10 +1732,10 @@ static uint8_t  usbd_audio_SOF (void *pdev)
 				 192);	 
 
 	  audio_dev.recordFlag = 0;
-	  printf("sof trigle\r\n");
+	  //printf("sof trigle\r\n");
 	  
   }
-  
+  g_sof_Cnt++;
   return USBD_OK;
 }
 

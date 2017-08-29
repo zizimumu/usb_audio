@@ -1001,6 +1001,8 @@ void record_Stop(void)
 
 	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx, DISABLE);
 	I2S_Cmd(SPI2, DISABLE);
+
+	audio_dev.work_st = NULL_STATE;
 }
 
 
@@ -1008,6 +1010,8 @@ void record_Stop(void)
 //note : the i2s control need more times to be inited
 static void AUDIO_Init(u32 audio_sample,u32 frame_bit)
 {
+	audio_dev.work_st = PLAY_STATE;
+		
 	audio_sample &= 0x00ffffff;
 	
 	I2S_user_Init(audio_sample,frame_bit);
@@ -1029,6 +1033,8 @@ static void AUDIO_Disable(USB_OTG_CORE_HANDLE *pdev)
 	audio_dev.PlayFlag = 0;
 
 audio_dev.open = 0;
+audio_dev.work_st = NULL_STATE;
+
 
 #ifdef TEST_MODE
 
@@ -1296,17 +1302,27 @@ static uint8_t  usbd_audio_Setup (void  *pdev,
 	else if(req->wIndex == 1 && req->wValue == 1){
 		//audio_dev.work_freq = audio_dev.work_freq & 0x00ffffff;
 		//AUDIO_Init(audio_dev.work_freq,AUDIO_FRAME_BITS);
-		audio_dev.recordFlag = 0;
+		// audio_dev.recordFlag = 0;
 		printf("set IF to play\r\n");
+
+
+		
 	}
 	else if(req->wIndex == 2 && req->wValue == 1){
-		audio_dev.recordFlag = 1;
 
+		if(PLAY_STATE == audio_dev.work_st){
+			printf("playing now,record dont work\r\n");
+			break;
+		}
+		audio_dev.recordFlag = 1;
+		audio_dev.work_st = RECORD_STATE;
 		record_init();
 		record_Start();
 		printf("set IF to recored\r\n");
 	}
 	else if(req->wIndex == 2 && req->wValue == 0){
+		
+		
 		record_Stop();
 		printf("record stop\r\n");
 	}
@@ -1350,7 +1366,10 @@ static uint8_t  usbd_audio_EP0_RxReady (void  *pdev)
 	audio_dev.work_freq = audio_dev.work_freq & 0x00ffffff;
 
 	printf("host set sample %d\r\n",audio_dev.work_freq);
-	AUDIO_Init(audio_dev.work_freq,AUDIO_FRAME_BITS);
+	if(audio_dev.work_st != RECORD_STATE)
+		AUDIO_Init(audio_dev.work_freq,AUDIO_FRAME_BITS);
+	else
+		printf("recording now,play dont work\r\n");
   }
   else if(audio_dev.host_cmd == HOST_CMD_SET_VOLUME){
 	audio_dev.host_cmd = 0;
@@ -1470,8 +1489,8 @@ if (epnum == (AUDIO_IN_EP & 0x7F)){
 			   sz); 
 #else
 	count++;
-	if(count % 1000 ==0)
-		printf("in \r\n");
+	//if(count % 1000 ==0)
+		//printf("in \r\n");
 
 	wr = RX_BUFF_SIZE - DMA_GetCurrDataCounter(DMA1_Stream3)*2;
 

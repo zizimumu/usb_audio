@@ -197,6 +197,7 @@ struct AUDIO_DEV_S{
 	u32 volume;
 	u32 open;
 	u32 recd_pt;
+	u32 work_st;
 	char feed[16]; 
 };
 
@@ -206,8 +207,9 @@ extern struct AUDIO_DEV_S audio_dev;
 #define FABS(a,b) ((a)>(b)?((a)-(b)):((b)-(a)))
 #define RX_BUFF_SIZE (100*192)
 
-
-
+#define PLAY_STATE 2
+#define RECORD_STATE 1
+#define NULL_STATE 0
 
 
 

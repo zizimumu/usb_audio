@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\STM324xG-EVAL\STM324xG-EVAL.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\STM324xG-EVAL\STM324xG-EVAL.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Wed Aug 09 17:57:02 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Tue Aug 29 14:26:49 2017
 <BR><P>
 <H3>Maximum Stack Usage =        160 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1469,7 +1469,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usbd_audio_Setup
 </UL>
 
-<P><STRONG><a name="[10f]"></a>record_Stop</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, usbd_audio_core.o(i.record_Stop))
+<P><STRONG><a name="[10f]"></a>record_Stop</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, usbd_audio_core.o(i.record_Stop))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = record_Stop
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_I2S_DMACmd
@@ -1712,7 +1712,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USB_OTG_EnableDevInt
 </UL>
 
-<P><STRONG><a name="[89]"></a>AUDIO_Disable</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, usbd_audio_core.o(i.AUDIO_Disable))
+<P><STRONG><a name="[89]"></a>AUDIO_Disable</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, usbd_audio_core.o(i.AUDIO_Disable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = AUDIO_Disable &rArr; DCD_EP_PrepareRx &rArr; USB_OTG_EPStartXfer &rArr; USB_OTG_WritePacket
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2S_Cmd
@@ -1724,7 +1724,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usbd_audio_Setup
 </UL>
 
-<P><STRONG><a name="[8f]"></a>AUDIO_Init</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, usbd_audio_core.o(i.AUDIO_Init))
+<P><STRONG><a name="[8f]"></a>AUDIO_Init</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, usbd_audio_core.o(i.AUDIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = AUDIO_Init &rArr; I2S_user_Init &rArr; I2S_Init &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wm_8731_init
@@ -1753,7 +1753,7 @@ Local Symbols
 <P><STRONG><a name="[17]"></a>USBD_audio_GetCfgDesc</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, usbd_audio_core.o(i.USBD_audio_GetCfgDesc))
 <BR>[Address Reference Count : 1]<UL><LI> usbd_audio_core.o(.data)
 </UL>
-<P><STRONG><a name="[12]"></a>usbd_audio_DataIn</STRONG> (Thumb, 310 bytes, Stack size 40 bytes, usbd_audio_core.o(i.usbd_audio_DataIn))
+<P><STRONG><a name="[12]"></a>usbd_audio_DataIn</STRONG> (Thumb, 288 bytes, Stack size 40 bytes, usbd_audio_core.o(i.usbd_audio_DataIn))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = usbd_audio_DataIn &rArr; DCD_EP_Tx &rArr; USB_OTG_EPStartXfer &rArr; USB_OTG_WritePacket
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_GetCurrDataCounter
@@ -1778,7 +1778,7 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usbd_audio_core.o(.data)
 </UL>
-<P><STRONG><a name="[11]"></a>usbd_audio_EP0_RxReady</STRONG> (Thumb, 112 bytes, Stack size 8 bytes, usbd_audio_core.o(i.usbd_audio_EP0_RxReady))
+<P><STRONG><a name="[11]"></a>usbd_audio_EP0_RxReady</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, usbd_audio_core.o(i.usbd_audio_EP0_RxReady))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = usbd_audio_EP0_RxReady &rArr; AUDIO_Init &rArr; I2S_user_Init &rArr; I2S_Init &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AUDIO_Init
@@ -1806,7 +1806,7 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usbd_audio_core.o(.data)
 </UL>
-<P><STRONG><a name="[10]"></a>usbd_audio_Setup</STRONG> (Thumb, 370 bytes, Stack size 32 bytes, usbd_audio_core.o(i.usbd_audio_Setup))
+<P><STRONG><a name="[10]"></a>usbd_audio_Setup</STRONG> (Thumb, 384 bytes, Stack size 32 bytes, usbd_audio_core.o(i.usbd_audio_Setup))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = usbd_audio_Setup &rArr; usb_set_sample &rArr; USBD_CtlSendData &rArr; DCD_EP_Tx &rArr; USB_OTG_EPStartXfer &rArr; USB_OTG_WritePacket
 </UL>
 <BR>[Calls]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlSendData

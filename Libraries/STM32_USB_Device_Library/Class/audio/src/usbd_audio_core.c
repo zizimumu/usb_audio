@@ -1002,7 +1002,8 @@ void record_Stop(void)
 	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx, DISABLE);
 	I2S_Cmd(SPI2, DISABLE);
 
-	audio_dev.work_st = NULL_STATE;
+	if(audio_dev.work_st != PLAY_STATE)
+		audio_dev.work_st = NULL_STATE;
 }
 
 
@@ -1016,7 +1017,7 @@ static void AUDIO_Init(u32 audio_sample,u32 frame_bit)
 	
 	I2S_user_Init(audio_sample,frame_bit);
 	Audio_DMA_Init(frame_bit);	
-    wm_8731_init(audio_sample,frame_bit);
+    	wm_8731_init(audio_sample,frame_bit);
     
 	audio_dev.wr_buf_pt = 0;
 	audio_dev.feed_state = 0;
@@ -1027,13 +1028,15 @@ static void AUDIO_Disable(USB_OTG_CORE_HANDLE *pdev)
 {
 	DMA_Cmd(DMA1_Stream4,DISABLE); 
 	I2S_Cmd(SPI2,DISABLE);
-    wm8731_disable();
+    	wm8731_disable();
 	audio_dev.wr_buf_pt = 0;
 	audio_dev.feed_state = 0;
 	audio_dev.PlayFlag = 0;
 
-audio_dev.open = 0;
-audio_dev.work_st = NULL_STATE;
+	audio_dev.open = 0;
+	if(audio_dev.work_st != RECORD_STATE)
+		audio_dev.work_st = NULL_STATE;
+
 
 
 #ifdef TEST_MODE
